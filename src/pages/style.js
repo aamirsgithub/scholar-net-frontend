@@ -8,7 +8,7 @@ export const SingleCourseWrapper = styled.div`
 
 export const CourseIntro = styled.div`
   padding: 40px 16px;
-  max-width: 992px;
+  max-width: 90%;
   display: grid;
 
   @media screen and (min-width: 880px) {
@@ -21,7 +21,10 @@ export const CourseIntro = styled.div`
   }
 `;
 
-export const CourseImage = styled.div``;
+export const CourseImage = styled.div`
+width: 90%;
+margin-top: 25px;
+`;
 
 export const CourseFoot = styled.div``;
 
@@ -104,15 +107,24 @@ export const CourseButton = styled.div`
   margin-top: 16px;
 `;
 
-export const AddToCartButton = styled(Link)`
+export const AddToCartButton = styled.button`
   display: inline-block;
   font-weight: bold;
   background-color: purple;
-  padding: 12px 28px;
+  padding: 10px 18px;
   color: white;
   text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
   &:hover {
-    background-color: darkpurple;
+    background-color: ${(props) => (props.disabled ? "grey" : "#7b1fa4")};
+  }
+
+  &:disabled {
+    background-color: grey;
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 `;
 
@@ -170,9 +182,9 @@ export const CourseContentList = styled.ul`
 
 // Additional styling for CourseLearnList to handle the content titles, descriptions, and videos
 export const ContentItem = styled.li`
-//   display: flex;
-//   justify-content: center;
-//   align-self: center;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-self: center;
   width: 60%;
   height: 400px;
   display: grid;
@@ -210,7 +222,6 @@ export const ContentItem = styled.li`
 `;
 
 export const CourseLearnList = styled.ul`
-
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 20px;
@@ -220,4 +231,19 @@ export const CourseLearnList = styled.ul`
   //   @media screen and (min-width: 1024px) {
   //     grid-template-columns: repeat(3, 1fr);
   //   }
+`;
+
+export const LearnItemStyled = styled.li`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; // Adjust the bottom margin to control space between items
+
+  .check-icon {
+    margin-right: 5px; // Space between the check icon and the text
+    color: green; // Example color for the check icon, adjust as needed
+  }
+
+  .learn-text {
+    // Style for the text if needed
+  }
 `;

@@ -85,8 +85,42 @@ export const DropdownLink = styled.a`
   padding: 5px 10px;
   text-decoration: none;
   font-size: 15px;
+  cursor: pointer;
 
   &:hover {
     color: blue;
+
   }
+`;
+
+export const CartItemBatch = styled.div`
+  background-color: var(--clr-orange);
+  position: absolute;
+  right: -11px;
+  top: -12px;
+  font-size: 12px;
+  font-weight: 700;
+  display: block;
+  width: 23px;
+  height: 23px;
+  color: var(--clr-white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+`;
+
+export const CartBtn = styled.div`
+  position: relative;
+  top: 6px;
+  cursor: pointer;
+  &:hover {
+    color: blue;
+    // transform: scale(1.1);
+    & ${CartItemBatch} {
+      transform: scale(0.5);
+    }
+  }
+  // transition: transform 0.3s ease;
 `;

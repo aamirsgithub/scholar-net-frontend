@@ -9,6 +9,8 @@ import {
   DropdownLink,
   LogoImg,
   DropdownSection,
+  CartItemBatch,
+  CartBtn,
 } from "./style";
 import SearchBar from "../../components/common/SearchBar";
 import Logo from "../../assets/images/logo-scholarnet0.png";
@@ -19,10 +21,43 @@ import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../authentication/Auth";
 
-const Navbar = () => {
+const Navbar = ({ totalItems }) => {
   const navigate = useNavigate();
   const { logout } = useAuth();
   const [userData, setUserData] = useState(null);
+  const [totalCartItems, setTotalCartItems] = useState(0);
+
+  const user = JSON.parse(localStorage.getItem("userData"));
+  const isUserInstructor = user?.role === "Instructor";
+  const isUserAdmin = user?.role === "Admin";
+
+  const handleLogout = () => {
+    localStorage.removeItem("cartItems");
+    logout();
+    navigate("/login");
+  };
+
+  useEffect(() => {
+    const updateCartItemsCount = () => {
+      const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      setTotalCartItems(cartItems.length);
+    };
+
+    updateCartItemsCount();
+    window.addEventListener("cartUpdated", updateCartItemsCount);
+    const userDataFromStorage = localStorage.getItem("userData");
+    if (userDataFromStorage) {
+      setUserData(JSON.parse(userDataFromStorage));
+    }
+
+    // Cleanup: remove event listener on component unmount
+    return () =>
+      window.removeEventListener("cartUpdated", updateCartItemsCount);
+  }, []);
+
+  const handleCartClick = () => {
+    navigate("/cart");
+  };
 
   useEffect(() => {
     const userDataFromStorage = localStorage.getItem("userData");
@@ -35,7 +70,7 @@ const Navbar = () => {
     <NavbarContainer>
       <FlexDiv style={{ justifyContent: "flex-start" }}>
         <LogoImg src={Logo} alt="App Logo" style={{ marginRight: "10px" }} />
-        <Link href="/categories">Categories</Link>
+        <Link href="">Categories</Link>
         <SearchBar />
       </FlexDiv>
 
@@ -57,11 +92,13 @@ const Navbar = () => {
           </>
         )}
 
-        <Link>
-          <ShoppingCartCheckoutRoundedIcon
-            style={{ fontSize: "22px", margin: "10px -15px 0px 0px" }}
-          />
-        </Link>
+        {!isUserInstructor && (
+          <CartBtn onClick={handleCartClick}>
+            <ShoppingCartCheckoutRoundedIcon style={{ fontSize: "22px" }} />
+            <CartItemBatch>{totalCartItems}</CartItemBatch>
+          </CartBtn>
+        )}
+
         <Link>
           <FavoriteBorderRoundedIcon
             style={{ fontSize: "22px", marginTop: "10px" }}
@@ -77,13 +114,13 @@ const Navbar = () => {
                 <div>{userData.email}</div>{" "}
               </DropdownSection>
               <DropdownSection>
-                <DropdownLink href="/profile">My Profile</DropdownLink>
-                <DropdownLink href="/my-learnings">My Learnings</DropdownLink>
-                <DropdownLink href="/my-cart">My Cart</DropdownLink>
+                <DropdownLink href="">My Profile</DropdownLink>
+                <DropdownLink href="">My Learnings</DropdownLink>
+                <DropdownLink href="">Favourite Courses</DropdownLink>
               </DropdownSection>
               <DropdownSection>
                 {" "}
-                <DropdownLink href="/dashboard">
+                <DropdownLink href="">
                   <div
                     style={{
                       display: "flex",
@@ -99,14 +136,12 @@ const Navbar = () => {
                   <DropdownLink href="/upload-course">Courses</DropdownLink>
                 )}
                 {userData.role === "Admin" && (
-                  <DropdownLink href="/manage-courses">
-                    Manage Courses
-                  </DropdownLink>
+                  <DropdownLink href="">Manage Courses</DropdownLink>
                 )}
-                <DropdownLink href="/Notifications">Notifications</DropdownLink>
+                <DropdownLink href="">Notifications</DropdownLink>
                 <DropdownSection>
                   {" "}
-                  <DropdownLink href="/logout">Logout</DropdownLink>
+                  <DropdownLink onClick={handleLogout}>Logout</DropdownLink>
                 </DropdownSection>
               </DropdownSection>
             </DropdownMenu>

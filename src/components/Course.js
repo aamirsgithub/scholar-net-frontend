@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import StarRating from "../components/StarRating";
 import { useNavigate } from "react-router-dom";
+
 
 const Course = ({
   _id,
@@ -18,7 +18,7 @@ const Course = ({
   CompleteCourse,
 }) => {
   const navigate = useNavigate();
-console.log("course id", _id)
+
   const handleSeeDetailsClick = () => {
     navigate(`/courses/${_id}`, {
       state: {
@@ -29,7 +29,6 @@ console.log("course id", _id)
   return (
     <CourseCard>
       <div className="item-img">
-        {/* <img src={image} alt={course_name} /> */}
         <img
           src={`http://localhost:5000/${image.replace(/\\/g, "/")}`}
           alt={course_name}
@@ -49,9 +48,6 @@ console.log("course id", _id)
         </div>
       </div>
       <div className="item-btns flex">
-        {/* <Link to={`/courses/${id}`} className="item-btn see-details-btn">
-          See details
-        </Link> */}
         <button
           onClick={handleSeeDetailsClick}
           className="item-btn see-details-btn"
