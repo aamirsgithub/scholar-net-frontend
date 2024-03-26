@@ -12,7 +12,13 @@ import {
   faRocket,
   faStore,
 } from "@fortawesome/free-solid-svg-icons";
-import { Col, Row, Button, Dropdown } from "@themesberg/react-bootstrap";
+import {
+  Col,
+  Row,
+  Button,
+  Dropdown,
+  Container,
+} from "@themesberg/react-bootstrap";
 import {
   ChoosePhotoWidget,
   InstructorProfileWidget,
@@ -22,6 +28,7 @@ import GeneralInfoForm from "../components/Forms";
 
 import Profile3 from "../assets/images/profile-picture-3.jpg";
 import Navbar from "../components/Navbar/Navbar";
+import InstructorMeeting from "../components/Meeting/StartMeeting";
 
 const InstructorProfile = () => {
   const [profileData, setProfileData] = useState({
@@ -41,7 +48,6 @@ const InstructorProfile = () => {
   });
 
   useEffect(() => {
-    // Fetch profile data from backend on component mount
     const fetchProfileData = async () => {
       try {
         const response = await fetch(
@@ -53,9 +59,6 @@ const InstructorProfile = () => {
         if (response.ok) {
           const data = await response.json();
           setProfileData(data);
-          // src = {`http://localhost:5000/${data.image.replace(/\\/g, "/")}`}
-          // console.log("Profile data img from backend:", src);
-          setDatabaseImg(data);
         }
       } catch (error) {
         console.error("Failed to fetch profile data:", error);
@@ -68,7 +71,11 @@ const InstructorProfile = () => {
   return (
     <>
       <Navbar />
-      <div style={{ padding: "10px 70px 10px 70px" }}>
+
+      <div
+        style={{ padding: "10px 70px 10px 70px", width: "100%" }}
+        className="d-flex-column justify-content-center align-items-center  "
+      >
         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4 px-3">
           <Dropdown>
             <Dropdown.Toggle
@@ -129,19 +136,16 @@ const InstructorProfile = () => {
         </div> */}
         </div>
 
-        <Row>
-          <Col xs={12} xl={4} style={{ marginTop: 25 }}>
-            <Row>
-              <Col xs={12}>
-                <InstructorProfile profileData={profileData} />
-              </Col>
-            </Row>
-          </Col>
-
-          <Col xs={12} xl={8}>
-            A
-          </Col>
-        </Row>
+        <Container
+          className="d-flex flex-column justify-content-start align-items-end"
+          style={{ minHeight: "100vh" }}
+        >
+          <Row className="w-100 justify-content-center">
+            <Col xs={12} xl={9}>
+              <InstructorProfileWidget profileData={profileData} />
+            </Col>
+          </Row>
+        </Container>
       </div>
     </>
   );

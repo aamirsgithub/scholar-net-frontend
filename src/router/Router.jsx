@@ -12,7 +12,7 @@ import SingleCourse from "../pages/SingleCourse";
 import StepOne from "../components/CourseUpload/StepOne";
 import CartPage from "../components/cart/CartPage";
 import TempTestPage from "../pages/TempTestPage";
-import InstructorMeeting from "../components/Meeting/InstructorMeeting";
+import StartMeeting from "../components/Meeting/StartMeeting";
 import StudentMeeting from "../components/Meeting/StudentMeeting";
 import InstructorSettings from "../pages/InstructorSettings";
 import InstructorProfile  from "../pages/InstructorProfile";
@@ -42,7 +42,7 @@ const Router = () => {
         <Route path="/instructor-profile" element={<ProtectedRoute><InstructorProfile /></ProtectedRoute>} />
         <Route path="/instructor-settings" element={<ProtectedRoute><InstructorSettings /></ProtectedRoute>} />
         <Route path="/student-meeting" element={<ProtectedRoute><StudentMeeting /></ProtectedRoute>} />
-        <Route path="/instructor-meeting" element={<ProtectedRoute><InstructorMeeting /></ProtectedRoute>} />
+        <Route path="/instructor-meeting" element={<ProtectedRoute><StartMeeting /></ProtectedRoute>} />
 
 
        

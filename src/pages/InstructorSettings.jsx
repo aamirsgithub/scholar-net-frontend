@@ -35,7 +35,7 @@ const TeacherSettings = () => {
     language: "",
     image: "",
   });
-  const [databaseImg, setDatabaseImg] = useState(null);
+  // const [databaseImg, setDatabaseImg] = useState(null);
 
   useEffect(() => {
     // Fetch profile data from backend on component mount
@@ -52,7 +52,7 @@ const TeacherSettings = () => {
           setProfileData(data);
           // src = {`http://localhost:5000/${data.image.replace(/\\/g, "/")}`}
           // console.log("Profile data img from backend:", src);
-          setDatabaseImg(data);
+          // setDatabaseImg(data);
         }
       } catch (error) {
         console.error("Failed to fetch profile data:", error);

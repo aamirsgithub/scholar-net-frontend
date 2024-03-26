@@ -28,7 +28,7 @@ const CourseList = () => {
     fetchCourses();
   }, []);
 
-  console.log("fetched courses from database: ", courses);
+  // console.log("fetched courses from database: ", courses);
 
   return (
     <CoursesListWrapper>

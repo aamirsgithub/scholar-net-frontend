@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperclip, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUserPlus,
+  faEnvelope,
+  faPhone,
+  faHome,
+  faBirthdayCake,
+  faTransgender,
+  faGlobeAmericas,
+  faLanguage,
+  faGraduationCap,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   Col,
   Row,
@@ -12,8 +22,11 @@ import {
 import Profile1 from "../assets/images/profile-picture-1.jpg";
 import ProfileCover from "../assets/images/profile-cover.jpg";
 import teamMembers from "../assets/data/teamMembers";
+import StartMeeting from "./Meeting/StartMeeting";
 
 export const InstructorProfileWidget = ({ profileData }) => {
+  const [courseId, setCourseId] = useState("65fc598b1ce0cb419f503f98");
+  const [meetingStartUrl, setMeetinStartURL] = useState("");
   const {
     firstName,
     lastName,
@@ -33,43 +46,47 @@ export const InstructorProfileWidget = ({ profileData }) => {
     : Profile1;
 
   return (
-    <Card border="light" className="text-center p-0 mb-4">
-      <div
-        style={{ backgroundImage: `url(${ProfileCover})` }}
-        className="profile-cover rounded-top"
-      />
-      <Card.Body className="pb-5">
-        <Card.Img
-          src={profileImage}
-          alt="Profile Image"
-          className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4"
+    <>
+      <StartMeeting courseId={courseId} setMeetinStartURL={setMeetinStartURL} />
+
+      <Card border="light" className="text-center p-0 mb-4">
+        <div
+          style={{ backgroundImage: `url(${ProfileCover})` }}
+          className="profile-cover rounded-top"
         />
-        <Card.Title>{`${firstName} ${lastName}`}</Card.Title>
-        <Card.Subtitle className="fw-normal">{email}</Card.Subtitle>
-        <Card.Text className="text-gray mb-4">
-          <FontAwesomeIcon icon={faEnvelope} className="me-2" />
-          {email}
-          <br />
-          <FontAwesomeIcon icon={faPhone} className="me-2" />
-          {phone}
-          <br />
-          <FontAwesomeIcon icon={faHome} className="me-2" />
-          {`${address}, ${city}, ${state}, ${zip}`}
-          <br />
-          <FontAwesomeIcon icon={faGraduationCap} className="me-2" />
-          {courseCategory}
-          <br />
-          <FontAwesomeIcon icon={faLanguage} className="me-2" />
-          {language}
-        </Card.Text>
-        <Button variant="primary" size="sm" className="me-2">
-          <FontAwesomeIcon icon={faUserPlus} className="me-1" /> Connect
-        </Button>
-        <Button variant="secondary" size="sm">
-          Send Message
-        </Button>
-      </Card.Body>
-    </Card>
+        <Card.Body className="pb-5">
+          <Card.Img
+            src={profileImage}
+            alt="Profile Image"
+            className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4"
+          />
+          <Card.Title>{`${firstName} ${lastName}`}</Card.Title>
+          <Card.Subtitle className="fw-normal">{email}</Card.Subtitle>
+          <Card.Text className="text-gray mb-4">
+            <FontAwesomeIcon icon={faEnvelope} className="me-2" />
+            {email}
+            <br />
+            <FontAwesomeIcon icon={faPhone} className="me-2" />
+            {phone}
+            <br />
+            <FontAwesomeIcon icon={faHome} className="me-2" />
+            {`${address}, ${city}, ${state}, ${zip}`}
+            <br />
+            <FontAwesomeIcon icon={faGraduationCap} className="me-2" />
+            {courseCategory}
+            <br />
+            <FontAwesomeIcon icon={faLanguage} className="me-2" />
+            {language}
+          </Card.Text>
+          <Button variant="secondary" size="sm" className="me-2">
+            Create Meeting
+          </Button>
+          <Button variant="primary" size="sm" className="me-2">
+            <FontAwesomeIcon icon={faUserPlus} className="me-1" /> Join Meeting
+          </Button>
+        </Card.Body>
+      </Card>
+    </>
   );
 };
 
