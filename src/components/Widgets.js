@@ -83,7 +83,7 @@ export const InstructorProfileWidget = ({ profileData }) => {
             Create Meeting
           </Button>
           <Button variant="primary" size="sm" className="me-2">
-            <FontAwesomeIcon icon={faUserPlus} className="me-1" /> Join Meeting
+            <FontAwesomeIcon icon={faUserPlus} className="me-1" /> Start Meeting
           </Button>
         </Card.Body>
       </Card>

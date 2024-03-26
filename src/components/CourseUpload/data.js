@@ -24,4 +24,5 @@ export const StepCardData = [
     Type: "Notes",
     desc: "This is a Notes description for a card in Scholar NET.",
   },
+  
 ];

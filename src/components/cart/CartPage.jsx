@@ -175,44 +175,5 @@ const CartWrapper = styled.div`
   }
 `;
 
-//   return (
-//     <CartWrapper>
-//       <div className="container">
-//         <CartPageTitle>
-//           <h3>Shopping Cart</h3>
-//         </CartPageTitle>
-//         <CartGrid>
-//           <CartGridLeft>
-//             <div>
-//               <CartCountInfo>
-//                 <span>{totalItems}</span> Course in Cart
-//               </CartCountInfo>
-//               <CartClearButton onClick={() => clearCart()}>
-//                 <MdClear />
-//                 <span>Clear All</span>
-//               </CartClearButton>
-//             </div>
-//             <CartItemsList>
-//               {cartItems.map((cartItem) => (
-//                 <CartItemCard
-//                   key={cartItem.courseID}
-//                   cartItem={cartItem}
-//                   removeFromCart={removeFromCart}
-//                 />
-//               ))}
-//             </CartItemsList>
-//           </CartGridLeft>
-//           <div>
-//             <CartTotal>
-//               <span>Total:</span>
-//               <CartTotalValue>${totalAmount.toFixed(2)}</CartTotalValue>
-//               <CheckoutButton>Checkout</CheckoutButton>
-//             </CartTotal>
-//           </div>
-//         </CartGrid>
-//       </div>
-//     </CartWrapper>
-//   );
-// };
 
 export default CartPage;

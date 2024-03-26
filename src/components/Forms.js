@@ -29,11 +29,6 @@ const GeneralInfoForm = ({ profileData, setProfileData }) => {
       formData.append(key, profileData[key]);
     }
 
-    // Append file if it's changed, assuming file input's onChange updates 'profileImage' in profileData
-    // if (profileData.profileImage instanceof File) {
-    //   formData.append("profileImage", profileData.profileImage);
-    // }
-
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
     }

@@ -30,6 +30,7 @@ const Navbar = ({ totalItems }) => {
   const user = JSON.parse(localStorage.getItem("userData"));
   const isUserInstructor = user?.role === "Instructor";
   const isUserAdmin = user?.role === "Admin";
+  const isUserStudent = user?.role === "Student";
 
   const handleLogout = () => {
     localStorage.removeItem("cartItems");
