@@ -11,15 +11,7 @@ export const Card = styled.div`
 //   padding: 48px;
   border-radius: 24px;
   background: #fff;
-//   @media (max-width: 1050px) {
-//     padding: 48px 36px;
-//   }
-//   @media (max-width: 990px) {
-//     padding: 48px 18px;
-//   }
-//   @media (max-width: 380px) {
-//     padding: 48px 8px;
-//   }
+
 `;
 
 export const SignUpText = styled.div`

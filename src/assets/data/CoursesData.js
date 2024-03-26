@@ -1,4 +1,4 @@
-import { course_images } from "./images";
+import { course_images } from "../../utils/images";
  
 const courses = [
     {

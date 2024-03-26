@@ -88,9 +88,9 @@ const SingleCoursePage = () => {
     fetchCourseData();
   }, [courseId]);
 
-  if (!courseData) {
-    return <div>Loading...</div>;
-  }
+  // if (!courseData) {
+  //   return <div>Loading...</div>;
+  // }
 
   const {
     _id,
@@ -146,9 +146,7 @@ const SingleCoursePage = () => {
           </CourseImage> */}
           <CourseDetails>
             <CourseCategory>{category}</CourseCategory>
-            <CourseHead>
-              <h5>{course_name}</h5>
-            </CourseHead>
+            <CourseHead>{course_name}</CourseHead>
             <CourseBody>
               <p className="course-para fs-18">{description}</p>
               <CourseRating>

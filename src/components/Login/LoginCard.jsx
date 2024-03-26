@@ -179,13 +179,10 @@ const LoginCard = () => {
       )}
       <FlexDiv
         style={{
-          width: isLaptop ? "50%" : "40%",
+          width: isLaptop ? "40%" : "40%",
         }}
       >
         <Card>
-          {/* <ImageDiv>
-            <Book alt="" src={LoginCardImg} />
-          </ImageDiv> */}
           <MainText style={{ marginTop: "16px" }}>
             Sign in to{" "}
             <span style={{ color: "var(--clr-orange)" }}>ScholarNET</span>
@@ -214,7 +211,7 @@ const LoginCard = () => {
             <CredenialsText style={{ marginTop: "16px" }}>
               Password
             </CredenialsText>
-            <ForgotPass>Forgot your password?</ForgotPass>
+            {/* <ForgotPass>Forgot your password?</ForgotPass> */}
           </FlexDiv>
           <InputWrapper style={{ marginTop: "8px" }}>
             <Inputs

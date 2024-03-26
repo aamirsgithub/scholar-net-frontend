@@ -37,6 +37,18 @@ const Navbar = ({ totalItems }) => {
     navigate("/login");
   };
 
+  const handleProfile = () => {
+    if (user?.role === "Instructor") {
+      navigate("/instructor-profile");
+    }
+  };
+
+  const handleSettings = () => {
+    if (user?.role === "Instructor") {
+      navigate("/instructor-settings");
+    }
+  };
+
   useEffect(() => {
     const updateCartItemsCount = () => {
       const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
@@ -114,12 +126,11 @@ const Navbar = ({ totalItems }) => {
                 <div>{userData.email}</div>{" "}
               </DropdownSection>
               <DropdownSection>
-                <DropdownLink href="">My Profile</DropdownLink>
+                <DropdownLink onClick={handleProfile}>Profile</DropdownLink>
                 <DropdownLink href="">My Learnings</DropdownLink>
                 <DropdownLink href="">Favourite Courses</DropdownLink>
               </DropdownSection>
               <DropdownSection>
-                {" "}
                 <DropdownLink href="">
                   <div
                     style={{
@@ -132,6 +143,7 @@ const Navbar = ({ totalItems }) => {
                     <div> Dashboard</div>
                   </div>
                 </DropdownLink>
+
                 {userData.role === "Instructor" && (
                   <DropdownLink href="/upload-course">Courses</DropdownLink>
                 )}
@@ -140,7 +152,7 @@ const Navbar = ({ totalItems }) => {
                 )}
                 <DropdownLink href="">Notifications</DropdownLink>
                 <DropdownSection>
-                  {" "}
+                  <DropdownLink onClick={handleSettings}>Settings</DropdownLink>
                   <DropdownLink onClick={handleLogout}>Logout</DropdownLink>
                 </DropdownSection>
               </DropdownSection>

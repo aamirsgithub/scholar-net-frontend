@@ -12,7 +12,7 @@ const CourseList = () => {
           "http://localhost:5000/api/fetch-all-courses",
           {
             method: "GET",
-            credentials: "include",
+            // credentials: "include",
           }
         );
         if (!response.ok) {
