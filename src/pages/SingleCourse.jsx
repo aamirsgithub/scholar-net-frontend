@@ -88,9 +88,9 @@ const SingleCoursePage = () => {
     fetchCourseData();
   }, [courseId]);
 
-  // if (!courseData) {
-  //   return <div>Loading...</div>;
-  // }
+  if (!courseData) {
+    return <div>Loading...</div>;
+  }
 
   const {
     _id,

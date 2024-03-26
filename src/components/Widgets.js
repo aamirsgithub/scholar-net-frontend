@@ -10,6 +10,7 @@ import {
   faGlobeAmericas,
   faLanguage,
   faGraduationCap,
+  faPaperclip,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Col,
