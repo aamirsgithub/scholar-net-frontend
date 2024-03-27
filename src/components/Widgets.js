@@ -81,9 +81,9 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
 
   const handleStartMeeting = () => {
     if (meetingData?.startUrl) {
-      window.open(meetingData.startUrl, '_blank').focus();
+      window.open(meetingData.startUrl, "_blank").focus();
     } else {
-      alert('The meeting URL is not available.');
+      alert("The meeting URL is not available.");
     }
   };
 
@@ -152,68 +152,77 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
           )}
         </Card.Body>
 
-        <div style={{ marginBottom: "10px", maxWidth: "600px" }}>
-          <label
-            htmlFor="startUrl"
-            style={{ display: "block", marginBottom: "5px" }}
-          >
-            Start URL:
-          </label>
-          <input
-            type="text"
-            id="startUrl"
-            value={meetingData?.startUrl || ""}
-            readOnly
-            style={{
-              width: "100%",
-              padding: "8px",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-              backgroundColor: "#f9f9f9",
-            }}
-          />
-        </div>
-        <div style={{ marginBottom: "10px", maxWidth: "600px" }}>
-          <label
-            htmlFor="joinUrl"
-            style={{ display: "block", marginBottom: "5px" }}
-          >
-            Join URL:
-          </label>
-          <input
-            type="text"
-            id="joinUrl"
-            value={meetingData?.joinUrl || ""}
-            readOnly
-            style={{
-              width: "100%",
-              padding: "8px",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-              backgroundColor: "#f9f9f9",
-            }}
-          />
-        </div>
-        <div style={{ marginBottom: "10px", maxWidth: "600px" }}>
-          <label
-            htmlFor="password"
-            style={{ display: "block", marginBottom: "5px" }}
-          >
-            Password:
-          </label>
-          <input
-            type="text"
-            id="password"
-            value={meetingData?.password || ""}
-            readOnly
-            style={{
-              width: "100%",
-              padding: "8px",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-              backgroundColor: "#f9f9f9",
-            }}
-          />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <div style={{ marginBottom: "10px", width: "650px" }}>
+            <label
+              htmlFor="startUrl"
+              style={{ display: "block", marginBottom: "5px" }}
+            >
+              Start URL:
+            </label>
+            <input
+              type="text"
+              id="startUrl"
+              value={meetingData?.startUrl || ""}
+              readOnly
+              style={{
+                width: "100%",
+                padding: "8px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                backgroundColor: "#f9f9f9",
+              }}
+            />
+          </div>
+          <div style={{ marginBottom: "10px", width: "650px" }}>
+            <label
+              htmlFor="joinUrl"
+              style={{ display: "block", marginBottom: "5px" }}
+            >
+              Join URL:
+            </label>
+            <input
+              type="text"
+              id="joinUrl"
+              value={meetingData?.joinUrl || ""}
+              readOnly
+              style={{
+                width: "100%",
+                padding: "8px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                backgroundColor: "#f9f9f9",
+              }}
+            />
+          </div>
+          <div style={{ marginBottom: "10px", width: "650px" }}>
+            <label
+              htmlFor="password"
+              style={{ display: "block", marginBottom: "5px" }}
+            >
+              Password:
+            </label>
+            <input
+              type="text"
+              id="password"
+              value={meetingData?.password || ""}
+              readOnly
+              style={{
+                width: "100%",
+                padding: "8px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                backgroundColor: "#f9f9f9",
+              }}
+            />
+          </div>
         </div>
       </Card>
     </>
