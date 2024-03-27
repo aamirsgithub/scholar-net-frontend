@@ -263,7 +263,7 @@ const LoginCard = () => {
                   <ContinueText>Continue</ContinueText>
                   <Arrow alt="" src={ArrowImg} />
                 </FlexDiv>
-              )}
+              )} 
             </ContinueDiv>
           </Btn>
           <FlexDiv

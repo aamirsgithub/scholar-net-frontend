@@ -25,11 +25,13 @@ import ProfileCover from "../assets/images/profile-cover.jpg";
 import teamMembers from "../assets/data/teamMembers";
 import StartMeeting from "./Meeting/StartMeeting";
 import { Navigate } from "react-router-dom";
+import CircularLoader from "./Login/CircularLoader";
 
 export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
   // const [courseId, setCourseId] = useState("65fc598b1ce0cb419f503f98");
-  // const [meetingStartUrl, setMeetinStartURL] = useState("");
+  const [meetingCreated, setMeetingCreated] = useState("");
   const [meetingData, setMeetingData] = useState(null);
+  const [loading, setLoading] = useState(false);
   const {
     firstName,
     lastName,
@@ -87,29 +89,37 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
     }
   };
 
-
-  const startMeeting = async () => {
-    const response = await fetch(
-      "http://localhost:5000/api/zoom/start-meeting",
-      {
+  const CreateMeeting = async () => {
+    setLoading(true); // Start loading
+  
+    try {
+      const response = await fetch("http://localhost:5000/api/zoom/start-meeting", {
         method: "POST",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ InstructorId }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        setMeetingCreated(data); // Assuming you're storing the meeting data in state
+        alert(`Meeting Created!`);
+      } else {
+        // Handle non-OK responses
+        alert("Failed to start the meeting. Please try again.");
       }
-    );
-
-    const data = await response.json();
-    console.log("data", data);
-    if (response.ok) {
-      alert(`Meeting Created!`);
-    } else {
+    } catch (error) {
+      // Handle errors that occur during the fetch operation
+      console.error("Error starting the meeting:", error);
       alert("Failed to start the meeting. Please try again.");
+    } finally {
+      setLoading(false); // Stop loading regardless of the outcome
     }
   };
-
+  
 
   return (
     <>
@@ -144,18 +154,30 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
             <FontAwesomeIcon icon={faLanguage} className="me-2" />
             {language}
           </Card.Text>
-          <Button variant="secondary" size="sm" className="me-2"  onClick={startMeeting}>
-            Create Meeting
-          </Button>
+
+
           <Button
-            onClick={fetchMeetingDetails}
-            variant="primary"
+            variant="secondary"
             size="sm"
             className="me-2"
+            onClick={CreateMeeting}
+            disabled={loading}
           >
-            <FontAwesomeIcon icon={faUserPlus} className="me-1" /> Fetch Meeting
-            Details
+             {/* {loading ? 'Creating Meeting...' : 'Meeting Created'} */}
+            {loading ? <CircularLoader disableShrink /> : <>Create Meeting</>}
           </Button>
+
+          {meetingCreated && (
+            <Button
+              onClick={fetchMeetingDetails}
+              variant="primary"
+              size="sm"
+              className="me-2"
+            >
+              <FontAwesomeIcon icon={faUserPlus} className="me-1" /> Fetch
+              Meeting Details
+            </Button>
+          )}
 
           {meetingData && (
             <Button
@@ -164,7 +186,7 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
               size="sm"
               className="me-2"
             >
-              Start Meeting
+              Join Meeting Now
             </Button>
           )}
         </Card.Body>
