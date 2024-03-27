@@ -180,6 +180,25 @@ export const CourseContentList = styled.ul`
   }
 `;
 
+
+
+export const HomeWrapper = styled.div`
+transition: filter 0.3s ease;
+filter: ${(props) => (props.isPopupVisible ? "blur(3px)" : "none")};
+`;
+
+export const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 50; // Ensure this is below your popup but above other content
+  display: ${(props) => (props.isPopupVisible ? "block" : "none")};
+`;
+
+
 // Additional styling for CourseLearnList to handle the content titles, descriptions, and videos
 export const ContentItem = styled.li`
   //   display: flex;

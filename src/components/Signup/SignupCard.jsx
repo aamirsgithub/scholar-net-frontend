@@ -255,7 +255,7 @@ const SignupCard = () => {
           // login(data.response);
           navigate("/login");
         }, 2000);
-        // setIsVerifyEmailPopupVisible(true);
+        // setIsVerifyEmailPopupVisible(true); 
       } else {
         setSnackbarMessage(
           data.message || "An error occurred. Please try again."

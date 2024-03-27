@@ -268,7 +268,7 @@ export const OuterFlexDiv = styled(FlexDiv)`
 `;
 
 export const MainContainer = styled.div`
-  width: 500px;
+  width: 400px;
   height: 400px;
   // padding: 105px 96px;
   // padding: 2%;
@@ -324,13 +324,13 @@ export const InnerContainer = styled.div`
 `;
 
 export const VerificationIcon = styled.div`
-  font-size: 48px;
-  @media (max-width: 815px) {
-    font-size: 40px;
-  }
-  @media (max-width: 500px) {
-    font-size: 30px;
-  }
+ width: 350px
+  // @media (max-width: 815px) {
+  //   font-size: 40px;
+  // }
+  // @media (max-width: 500px) {
+  //   font-size: 30px;
+  // }
 `;
 
 export const VerificationStatus = styled.div`

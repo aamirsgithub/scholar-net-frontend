@@ -20,12 +20,18 @@ import {
   OR,
   SignUpText,
 } from "./style";
-import { InputWrapper, ToggleText, InputErrorLogin } from "../Signup/style";
+import {
+  InputWrapper,
+  ToggleText,
+  InputErrorLogin,
+  VerifyEmailPopUpDiv,
+} from "../Signup/style";
 import ArrowImg from "../../assets/images/ContinueArrow.svg";
 import { useMediaQuery } from "@mui/material";
 import CircularProgress from "./CircularLoader";
 import SnackbarAlert from "./SnackbarAlert";
 import { useAuth } from "../../authentication/Auth";
+import VerifyEmailPopup from "./VerifyEmailPopup";
 
 const LoginCard = () => {
   const [email, setEmail] = useState("");
@@ -39,6 +45,8 @@ const LoginCard = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isSubmitAttempted, setIsSubmitAttempted] = useState(false);
+  const [isVerifyEmailPopupVisible, setIsVerifyEmailPopupVisible] = useState(false);
+
   const navigate = useNavigate();
   const isLaptop = useMediaQuery("(max-width:1300px)");
   const isTab = useMediaQuery("(max-width:900px)");
@@ -73,6 +81,10 @@ const LoginCard = () => {
   };
 
   const { login } = useAuth();
+
+  const handleVerifyEmailPopupClose = () => {
+    setIsVerifyEmailPopupVisible(false);
+  };
 
   const handleLogin = async () => {
     setIsSubmitAttempted(true);
@@ -126,8 +138,10 @@ const LoginCard = () => {
         setSnackbarOpen(true);
         // login(data.response);
         setTimeout(() => {
+          localStorage.setItem('showVerifyEmailPopup', 'true');
           login(data.user);
           navigate("/");
+          // setIsVerifyEmailPopupVisible(true);
         }, 2000);
       } else {
         console.error("Login failed", data);
@@ -166,6 +180,11 @@ const LoginCard = () => {
         variant={snackbarVariant}
         color={snackbarColor}
       />
+      {isVerifyEmailPopupVisible && (
+        <VerifyEmailPopUpDiv>
+          <VerifyEmailPopup onClose={handleVerifyEmailPopupClose} />
+        </VerifyEmailPopUpDiv>
+      )}
       {!isTab && (
         <FlexDiv
           style={{
