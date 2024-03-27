@@ -87,9 +87,33 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
     }
   };
 
+
+  const startMeeting = async () => {
+    const response = await fetch(
+      "http://localhost:5000/api/zoom/start-meeting",
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ InstructorId }),
+      }
+    );
+
+    const data = await response.json();
+    console.log("data", data);
+    if (response.ok) {
+      alert(`Meeting Created!`);
+    } else {
+      alert("Failed to start the meeting. Please try again.");
+    }
+  };
+
+
   return (
     <>
-      <StartMeeting InstructorId={InstructorId} />
+      {/* <StartMeeting InstructorId={InstructorId} /> */}
 
       <Card border="light" className="text-center p-0 mb-4">
         <div
@@ -120,7 +144,7 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
             <FontAwesomeIcon icon={faLanguage} className="me-2" />
             {language}
           </Card.Text>
-          <Button variant="secondary" size="sm" className="me-2">
+          <Button variant="secondary" size="sm" className="me-2"  onClick={startMeeting}>
             Create Meeting
           </Button>
           <Button
@@ -132,14 +156,7 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
             <FontAwesomeIcon icon={faUserPlus} className="me-1" /> Fetch Meeting
             Details
           </Button>
-          {/* <Button
-            onClick={handleStartMeeting}
-            variant="secondary"
-            size="sm"
-            className="me-2"
-          >
-            Join Meeting
-          </Button> */}
+
           {meetingData && (
             <Button
               onClick={handleStartMeeting}
