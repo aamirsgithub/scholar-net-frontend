@@ -67,7 +67,7 @@ const TeacherSettings = () => {
       <Navbar />
       <div style={{ padding: "10px 70px 10px 70px" }}>
         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4 px-3">
-          <Dropdown>
+          {/* <Dropdown>
             <Dropdown.Toggle
               as={Button}
               variant="secondary"
@@ -91,7 +91,7 @@ const TeacherSettings = () => {
                 Subscription Plan
               </Dropdown.Item>
             </Dropdown.Menu>
-          </Dropdown>
+          </Dropdown> */}
 
           {/* <div className="d-flex">
           <Dropdown>

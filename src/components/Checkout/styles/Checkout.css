@@ -1,0 +1,29 @@
+/* styles.css */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+  }
+  
+  .formControl {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .inputField {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .cardElement {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .subscribeButton {
+    width: 100%;
+  }
+  

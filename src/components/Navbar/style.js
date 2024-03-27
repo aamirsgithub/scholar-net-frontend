@@ -21,7 +21,7 @@ export const LogoImg = styled.img`
 
 export const Link = styled.a`
   margin: 0 15px;
-  color: blue;
+  color: black;
   text-decoration: none;
   font-size: 15px;
   cursor: pointer;

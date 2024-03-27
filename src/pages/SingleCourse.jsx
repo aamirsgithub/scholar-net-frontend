@@ -128,7 +128,7 @@ const SingleCoursePage = () => {
     if (!itemExists) {
       cartItems.push(newItem);
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
-      setIsAddedToCart(true); // Update the state to reflect the addition
+      setIsAddedToCart(true); 
       window.dispatchEvent(new CustomEvent("cartUpdated"));
     }
   };

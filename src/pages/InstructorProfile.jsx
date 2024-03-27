@@ -25,7 +25,6 @@ import {
   ProfileCardWidget,
 } from "../components/Widgets";
 import GeneralInfoForm from "../components/Forms";
-
 import Profile3 from "../assets/images/profile-picture-3.jpg";
 import Navbar from "../components/Navbar/Navbar";
 import InstructorMeeting from "../components/Meeting/StartMeeting";
@@ -46,6 +45,21 @@ const InstructorProfile = () => {
     language: "",
     image: "",
   });
+  const [userData, setUserData] = useState(null);
+  
+  useEffect(() => {
+    const userDataFromStorage = localStorage.getItem("userData");
+    if (userDataFromStorage) {
+      setUserData(JSON.parse(userDataFromStorage));
+    }
+  }, []);
+
+  // Using optional chaining to safely access _id
+  const InstructorId = userData?._id;
+  console.log("Instructor ID:", InstructorId);
+
+ 
+
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -68,6 +82,12 @@ const InstructorProfile = () => {
     fetchProfileData();
   }, []);
 
+
+
+
+
+
+
   return (
     <>
       <Navbar />
@@ -77,7 +97,7 @@ const InstructorProfile = () => {
         className="d-flex-column justify-content-center align-items-center  "
       >
         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4 px-3">
-          <Dropdown>
+          {/* <Dropdown>
             <Dropdown.Toggle
               as={Button}
               variant="secondary"
@@ -101,7 +121,7 @@ const InstructorProfile = () => {
                 Subscription Plan
               </Dropdown.Item>
             </Dropdown.Menu>
-          </Dropdown>
+          </Dropdown> */}
 
           {/* <div className="d-flex">
           <Dropdown>
@@ -142,7 +162,7 @@ const InstructorProfile = () => {
         >
           <Row className="w-100 justify-content-center">
             <Col xs={12} xl={9}>
-              <InstructorProfileWidget profileData={profileData} />
+              <InstructorProfileWidget profileData={profileData} InstructorId={InstructorId}  />
             </Col>
           </Row>
         </Container>

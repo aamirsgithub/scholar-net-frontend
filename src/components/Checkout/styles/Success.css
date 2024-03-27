@@ -1,0 +1,27 @@
+.success-page {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.success-text {
+  color: green;
+}
+
+.info-text {
+  color: lightyellow;
+}
+
+.tick-image {
+  width: 250px;
+  height: 250px;
+  margin: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.back-link {
+  margin: 16px;
+}

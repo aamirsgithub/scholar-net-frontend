@@ -24,10 +24,12 @@ import Profile1 from "../assets/images/profile-picture-1.jpg";
 import ProfileCover from "../assets/images/profile-cover.jpg";
 import teamMembers from "../assets/data/teamMembers";
 import StartMeeting from "./Meeting/StartMeeting";
+import { Navigate } from "react-router-dom";
 
-export const InstructorProfileWidget = ({ profileData }) => {
-  const [courseId, setCourseId] = useState("65fc598b1ce0cb419f503f98");
-  const [meetingStartUrl, setMeetinStartURL] = useState("");
+export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
+  // const [courseId, setCourseId] = useState("65fc598b1ce0cb419f503f98");
+  // const [meetingStartUrl, setMeetinStartURL] = useState("");
+  const [meetingData, setMeetingData] = useState(null);
   const {
     firstName,
     lastName,
@@ -46,9 +48,48 @@ export const InstructorProfileWidget = ({ profileData }) => {
     ? `http://localhost:5000/${image.replace(/\\/g, "/")}`
     : Profile1;
 
+  // console.log("instructor profile data", profileData)
+  // console.log("meeting join url", meetingStartUrl)
+
+  //fetching meeting details from backend:
+  const fetchMeetingDetails = async () => {
+    const response = await fetch(
+      "http://localhost:5000/api/zoom/meeting-details",
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ instructorId: InstructorId }),
+      }
+    );
+
+    const data = await response.json();
+    console.log("Meeting data:", data);
+    if (response.ok) {
+      // Set only the needed details in the state of the parent component
+      setMeetingData({
+        startUrl: data.startUrl,
+        joinUrl: data.joinUrl,
+        password: data.password,
+      });
+    } else {
+      alert("Failed to fetch meeting details. Please try again.");
+    }
+  };
+
+  const handleStartMeeting = () => {
+    if (meetingData?.startUrl) {
+      window.open(meetingData.startUrl, '_blank').focus();
+    } else {
+      alert('The meeting URL is not available.');
+    }
+  };
+
   return (
     <>
-      <StartMeeting courseId={courseId} setMeetinStartURL={setMeetinStartURL} />
+      <StartMeeting InstructorId={InstructorId} />
 
       <Card border="light" className="text-center p-0 mb-4">
         <div
@@ -82,10 +123,98 @@ export const InstructorProfileWidget = ({ profileData }) => {
           <Button variant="secondary" size="sm" className="me-2">
             Create Meeting
           </Button>
-          <Button variant="primary" size="sm" className="me-2">
-            <FontAwesomeIcon icon={faUserPlus} className="me-1" /> Start Meeting
+          <Button
+            onClick={fetchMeetingDetails}
+            variant="primary"
+            size="sm"
+            className="me-2"
+          >
+            <FontAwesomeIcon icon={faUserPlus} className="me-1" /> Fetch Meeting
+            Details
           </Button>
+          {/* <Button
+            onClick={handleStartMeeting}
+            variant="secondary"
+            size="sm"
+            className="me-2"
+          >
+            Join Meeting
+          </Button> */}
+          {meetingData && (
+            <Button
+              onClick={handleStartMeeting}
+              variant="secondary"
+              size="sm"
+              className="me-2"
+            >
+              Start Meeting
+            </Button>
+          )}
         </Card.Body>
+
+        <div style={{ marginBottom: "10px", maxWidth: "600px" }}>
+          <label
+            htmlFor="startUrl"
+            style={{ display: "block", marginBottom: "5px" }}
+          >
+            Start URL:
+          </label>
+          <input
+            type="text"
+            id="startUrl"
+            value={meetingData?.startUrl || ""}
+            readOnly
+            style={{
+              width: "100%",
+              padding: "8px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              backgroundColor: "#f9f9f9",
+            }}
+          />
+        </div>
+        <div style={{ marginBottom: "10px", maxWidth: "600px" }}>
+          <label
+            htmlFor="joinUrl"
+            style={{ display: "block", marginBottom: "5px" }}
+          >
+            Join URL:
+          </label>
+          <input
+            type="text"
+            id="joinUrl"
+            value={meetingData?.joinUrl || ""}
+            readOnly
+            style={{
+              width: "100%",
+              padding: "8px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              backgroundColor: "#f9f9f9",
+            }}
+          />
+        </div>
+        <div style={{ marginBottom: "10px", maxWidth: "600px" }}>
+          <label
+            htmlFor="password"
+            style={{ display: "block", marginBottom: "5px" }}
+          >
+            Password:
+          </label>
+          <input
+            type="text"
+            id="password"
+            value={meetingData?.password || ""}
+            readOnly
+            style={{
+              width: "100%",
+              padding: "8px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              backgroundColor: "#f9f9f9",
+            }}
+          />
+        </div>
       </Card>
     </>
   );

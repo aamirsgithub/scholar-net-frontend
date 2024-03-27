@@ -1,0 +1,25 @@
+.cancel-page {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.cancel-text {
+  color: red;
+}
+
+.info-text {
+  color: lightcoral;
+}
+
+.cancel-image {
+  width: 250px;
+  height: 250px;
+  margin: 16px;
+}
+
+.back-link {
+  margin: 16px;
+}

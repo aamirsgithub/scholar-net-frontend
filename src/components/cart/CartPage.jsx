@@ -65,6 +65,66 @@ const CartPage = () => {
     );
   }
 
+  const handleCheckout = async () => {
+    try {
+      const lineItems = cartItems.map((item) => ({
+        name: item.course_name,
+        quantity: 1,
+        price: item.discounted_price,
+        courseId: item.courseID,
+      }));
+
+      const response = await fetch("http://localhost:5000/checkout-session", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ items: lineItems }),
+      });
+
+      const sessionUrl = await response.json();
+      console.log(sessionUrl);
+      if (sessionUrl.url) {
+        window.location.href = sessionUrl.url;
+      } else {
+        console.error("Failed to get checkout session URL");
+      }
+    } catch (error) {
+      console.error("Checkout failed:", error);
+    }
+  };
+
+  // const handleCheckout = async () => {
+  //   try {
+  //     // Prepare line items to send to backend
+  //     const lineItems = cartItems.map(item => ({
+  //       name: item.course_name,
+  //       quantity: 1,
+  //       price: item.discounted_price,
+  //     }));
+
+  //     // Fetch checkout session URL from backend
+  //     const response = await fetch("http://localhost:5000/checkout-session", {
+  //       method: "POST",
+  //       credentials: "include",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ items: lineItems }),
+  //     });
+
+  //     const sessionUrl = await response.json();
+  //     console.log(sessionUrl);
+  //     window.location.href = sessionUrl.url;
+
+  //     // const sessionUrl = await response.json();
+  //     // window.location.href = sessionUrl;
+  //   } catch (error) {
+  //     console.error("Checkout failed:", error);
+  //   }
+  // };
+
   return (
     <>
       <Navbar totalItems={totalItems} />
@@ -112,6 +172,7 @@ const CartPage = () => {
                 <button
                   type="button"
                   className="checkout-btn bg-purple text-white fw-6"
+                  onClick={handleCheckout}
                 >
                   Checkout
                 </button>
@@ -174,6 +235,5 @@ const CartWrapper = styled.div`
     }
   }
 `;
-
 
 export default CartPage;
