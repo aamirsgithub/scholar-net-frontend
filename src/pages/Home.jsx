@@ -5,37 +5,39 @@ import CoursesList from "../components/CourseList";
 import CategoriesList from "../components/CategoriesList";
 import Footer from "../components/Footer/FooterCard";
 import VerifyEmailPopup from "../components/Login/VerifyEmailPopup";
-import {HomeWrapper, Overlay} from "./style"
+import { HomeWrapper, Overlay } from "./style";
+import MarqueeText from "../components/common/MarqueeText";
 const Home = () => {
-  const [isVerifyEmailPopupVisible, setIsVerifyEmailPopupVisible] =
+  const [isSupportGhazaPopupVisible, setIsSupportGhazaPopupVisible] =
     useState(false);
 
   useEffect(() => {
     const shouldShowPopup =
       localStorage.getItem("showVerifyEmailPopup") === "true";
     if (shouldShowPopup) {
-      setIsVerifyEmailPopupVisible(true);
+      setIsSupportGhazaPopupVisible(true);
       localStorage.removeItem("showVerifyEmailPopup");
     }
   }, []);
 
-  const handleVerifyEmailPopupClose = () => {
-    setIsVerifyEmailPopupVisible(false);
+  const handleGhazaPopupClose = () => {
+    setIsSupportGhazaPopupVisible(false);
   };
   return (
     <>
-      <Overlay isPopupVisible={isVerifyEmailPopupVisible} />
-      <HomeWrapper isPopupVisible={isVerifyEmailPopupVisible}>
+      <Overlay isPopupVisible={isSupportGhazaPopupVisible} />
+      <HomeWrapper isPopupVisible={isSupportGhazaPopupVisible}>
         <div className="holder">
           <Navbar />
           <Hero />
+          <MarqueeText />
           <CoursesList />
           {/* <CategoriesList /> */}
           <Footer />
         </div>
       </HomeWrapper>
-      {isVerifyEmailPopupVisible && (
-        <VerifyEmailPopup onClose={handleVerifyEmailPopupClose} />
+      {isSupportGhazaPopupVisible && (
+        <VerifyEmailPopup onClose={handleGhazaPopupClose} />
       )}
     </>
   );

@@ -28,9 +28,10 @@ const Navbar = ({ totalItems }) => {
   const [totalCartItems, setTotalCartItems] = useState(0);
 
   const user = JSON.parse(localStorage.getItem("userData"));
-  const isUserInstructor = user?.role === "Instructor";
-  const isUserAdmin = user?.role === "Admin";
-  const isUserStudent = user?.role === "Student";
+  const isInstructor = user?.role === "Instructor";
+  const isAdmin = user?.role === "Admin";
+  const isStudent = user?.role === "Student";
+
 
   const handleLogout = () => {
     localStorage.removeItem("cartItems");
@@ -39,13 +40,25 @@ const Navbar = ({ totalItems }) => {
   };
 
   const handleProfile = () => {
-    if (user?.role === "Instructor") {
+    if (isInstructor) {
+      navigate("/instructor-profile");
+    }
+
+    if (isStudent) {
+      navigate("/student-profile");
+    } else if (isAdmin) {
+      navigate("/admin-profile");
+    } else if (isInstructor) {
       navigate("/instructor-profile");
     }
   };
 
   const handleSettings = () => {
-    if (user?.role === "Instructor") {
+    if (isStudent) {
+      navigate("/student-settings");
+    } else if (isAdmin) {
+      navigate("/admin-settings");
+    } else if (isInstructor) {
       navigate("/instructor-settings");
     }
   };
@@ -92,7 +105,7 @@ const Navbar = ({ totalItems }) => {
           <Link href="/instructor">Instructor</Link>
         )}
         {userData && userData.role === "Student" && (
-          <Link href="/student">Student</Link>
+          <Link href="/student-profile">Student</Link>
         )}
         {userData && userData.role === "Admin" && (
           <Link href="/admin">Admin</Link>
@@ -105,7 +118,7 @@ const Navbar = ({ totalItems }) => {
           </>
         )}
 
-        {!isUserInstructor && (
+        {!isInstructor && (
           <CartBtn onClick={handleCartClick}>
             <ShoppingCartCheckoutRoundedIcon style={{ fontSize: "22px" }} />
             <CartItemBatch>{totalCartItems}</CartItemBatch>
@@ -153,7 +166,7 @@ const Navbar = ({ totalItems }) => {
                 )}
                 <DropdownLink href="">Notifications</DropdownLink>
                 <DropdownSection>
-                  <DropdownLink onClick={handleSettings}>Settings</DropdownLink>
+                  <DropdownLink onClick={handleSettings}>Go to Settings</DropdownLink>
                   <DropdownLink onClick={handleLogout}>Logout</DropdownLink>
                 </DropdownSection>
               </DropdownSection>

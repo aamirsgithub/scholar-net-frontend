@@ -103,6 +103,21 @@ export const CoursePrice = styled.div`
   }
 `;
 
+export const CoursePurchasedText = styled.div`
+  margin-top: 12px;
+  .purchased {
+    font-size: 26px;
+    font-weight: bold;
+    color: #eceb98;
+  }
+
+  .price {
+    font-size: 18px;
+    // font-weight: bold;
+    // color: #eceb98;
+  }
+`;
+
 export const CourseButton = styled.div`
   margin-top: 16px;
 `;
@@ -265,4 +280,17 @@ export const LearnItemStyled = styled.li`
   .learn-text {
     // Style for the text if needed
   }
+`;
+
+export const LockedVideo = styled.div`
+    opacity: 0.6;
+    background-color: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px; // Adjust based on your actual video player size
+    font-size: 20px;
+    text-align: center;
+    border: 2px dashed red;
 `;

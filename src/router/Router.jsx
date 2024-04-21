@@ -16,6 +16,8 @@ import InstructorSettings from "../pages/InstructorSettings";
 import InstructorProfile  from "../pages/InstructorProfile";
 import SuccessPage from "../components/Checkout/Success";
 import CancelPage from "../components/Checkout/Cancel";
+import StudentProfile from "../pages/StudentProfile";
+import StudentSettings from "../pages/StudentSettings";
 
 const Router = () => {
   return (
@@ -34,6 +36,9 @@ const Router = () => {
         {/* PROTECTED ROUTES */}
         <Route path="/upload-course" element={<ProtectedRoute><StepOne /></ProtectedRoute>} />
         <Route path="/upload-course-video-lectures" element={<ProtectedRoute><UploadVideoCourse /></ProtectedRoute>} />
+
+        <Route path="/student-profile" element={<ProtectedRoute><StudentProfile /></ProtectedRoute>} />
+        <Route path="/student-settings" element={<ProtectedRoute><StudentSettings /></ProtectedRoute>} />
 
         <Route path="/instructor-profile" element={<ProtectedRoute><InstructorProfile /></ProtectedRoute>} />
         <Route path="/instructor-settings" element={<ProtectedRoute><InstructorSettings /></ProtectedRoute>} />

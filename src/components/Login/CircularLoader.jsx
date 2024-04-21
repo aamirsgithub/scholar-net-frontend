@@ -1,7 +1,7 @@
 import * as React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export default function CircularLoader() {
+export default function CircularLoader({size=20}) {
   return (
     <CircularProgress
       sx={{
@@ -9,7 +9,7 @@ export default function CircularLoader() {
         alignSelf: "center",
         justifySelf: "center",
       }}
-      size={35}
+      size={size}
       disableShrink
     />
   );

@@ -7,13 +7,13 @@ import { useSearchParams } from "react-router-dom";
 const SuccessPage = () => {
   let [searchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");
-console.log("session id:", sessionId)
+// console.log("session id:", sessionId)
   useEffect(() => {
     const processPaymentSuccess = async () => {
       const response = await fetch(
         `http://localhost:5000/payment-success?session_id=${sessionId}`,
         {
-          credentials: "include", // to ensure cookies are sent if using sessions
+          credentials: "include", 
         }
       );
       const data = await response.json();

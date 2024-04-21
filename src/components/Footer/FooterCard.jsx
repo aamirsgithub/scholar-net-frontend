@@ -11,8 +11,8 @@ import {
 
 const FooterCard = () => {
   return (
-    <MDBFooter className="text-center" color="white" bgColor="black">
-      <MDBContainer className="p-4">
+    <MDBFooter className="text-center" color="white" style={{ backgroundColor: '#000' }}>
+      <MDBContainer className="p-4" style={{ backgroundColor: '#000' }}>
         <section className="mb-4">
           <MDBBtn
             outline

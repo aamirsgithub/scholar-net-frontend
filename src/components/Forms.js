@@ -12,15 +12,22 @@ import {
   InputGroup,
   Button,
 } from "@themesberg/react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const GeneralInfoForm = ({ profileData, setProfileData }) => {
+  const user = JSON.parse(localStorage.getItem("userData"));
+  const isInstructor = user?.role === "Instructor";
+  const isAdmin = user?.role === "Admin";
+  const isStudent = user?.role === "Student";
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProfileData((prevState) => ({ ...prevState, [name]: value }));
   };
 
   // Handler for form submission
-  const handleSubmit = async (e) => {
+  const handleInstructorSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
 
@@ -54,23 +61,70 @@ const GeneralInfoForm = ({ profileData, setProfileData }) => {
       );
 
       if (response.ok) {
-        // Handle successful profile update
-        alert("Profile updated successfully");
+        toast.success("Instructor Profile updated successfully");
       } else {
-        // Handle errors
-        alert("Failed to update profile");
+        toast.error("Failed to update instructor profile");
       }
     } catch (error) {
-      console.error("Failed to submit profile data:", error);
+      console.error("Failed to submit instructor profile data:", error);
+      toast.error("Error during form submission");
+    }
+  };
+
+  const handleStudentSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    // Append profile data fields to formData
+    for (const key in profileData) {
+      formData.append(key, profileData[key]);
+    }
+
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/student/profile`,
+        {
+          method: "POST",
+          body: formData,
+          credentials: "include",
+        }
+      );
+
+      if (response.ok) {
+        toast.success("Student Profile updated successfully");
+      } else {
+        toast.error("Failed to update student profile");
+      }
+    } catch (error) {
+      console.error("Failed to submit student profile data:", error);
+      toast.error("Failed to submit profile data");
     }
   };
 
   return (
     <Container className="mt-4" style={{ maxWidth: "800px" }}>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <Row>
         <Col>
           <h2 className="mb-3">General Information</h2>
-          <Form onSubmit={handleSubmit}>
+          <Form
+            onSubmit={isStudent ? handleStudentSubmit : handleInstructorSubmit}
+          >
             <Row>
               <Col md={6}>
                 <Form.Group className="mb-3">
@@ -172,7 +226,7 @@ const GeneralInfoForm = ({ profileData, setProfileData }) => {
                 onChange={handleInputChange}
               />
             </Form.Group>
-
+            {/* 
             <Form.Group className="mb-3">
               <Form.Label>Address</Form.Label>
               <Form.Control
@@ -181,7 +235,7 @@ const GeneralInfoForm = ({ profileData, setProfileData }) => {
                 value={profileData.address || ""}
                 onChange={handleInputChange}
               />
-            </Form.Group>
+            </Form.Group> */}
 
             <Row>
               <Col md={6}>
@@ -212,7 +266,7 @@ const GeneralInfoForm = ({ profileData, setProfileData }) => {
                   </Form.Select>
                 </Form.Group>
               </Col>
-              <Col md={2}>
+              {/* <Col md={2}>
                 <Form.Group className="mb-3">
                   <Form.Label>ZIP</Form.Label>
                   <Form.Control
@@ -222,26 +276,28 @@ const GeneralInfoForm = ({ profileData, setProfileData }) => {
                     onChange={handleInputChange}
                   />
                 </Form.Group>
-              </Col>
+              </Col> */}
             </Row>
 
-            <Form.Group className="mb-3">
-              <Form.Label>Course Category</Form.Label>
-              <Form.Select
-                name="courseCategory"
-                value={profileData.courseCategory || ""}
-                onChange={handleInputChange}
-              >
-                <option>Select category...</option>
-                <option value="data-science">Data Science</option>
-                <option value="python">Python</option>
-                <option value="machine-learning">Machine Learning</option>
-                <option value="deep-learning">Deep Learning</option>
-                <option value="data-structure">Data Structure</option>
-                <option value="android">Android</option>
-                <option value="ios">iOS</option>
-              </Form.Select>
-            </Form.Group>
+            {!isStudent && (
+              <Form.Group className="mb-3">
+                <Form.Label>Course Category</Form.Label>
+                <Form.Select
+                  name="courseCategory"
+                  value={profileData.courseCategory || ""}
+                  onChange={handleInputChange}
+                >
+                  <option>Select category...</option>
+                  <option value="data-science">Data Science</option>
+                  <option value="python">Python</option>
+                  <option value="machine-learning">Machine Learning</option>
+                  <option value="deep-learning">Deep Learning</option>
+                  <option value="data-structure">Data Structure</option>
+                  <option value="android">Android</option>
+                  <option value="ios">iOS</option>
+                </Form.Select>
+              </Form.Group>
+            )}
 
             <Form.Group className="mb-3">
               <Form.Label>Language</Form.Label>

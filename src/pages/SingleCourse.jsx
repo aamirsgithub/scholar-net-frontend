@@ -5,7 +5,7 @@ import { TbWorld } from "react-icons/tb";
 import { FaShoppingCart } from "react-icons/fa";
 import { RiClosedCaptioningFill } from "react-icons/ri";
 import { BiCheck } from "react-icons/bi";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import {
   SingleCourseWrapper,
@@ -30,14 +30,23 @@ import {
   CourseContentList,
   ContentItem,
   LearnItemStyled,
+  LockedVideo,
+  CoursePurchasedText,
 } from "./style";
 import Navbar from "../components/Navbar/Navbar";
+import { FaLock } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SingleCoursePage = () => {
   const { courseId } = useParams();
   const [courseData, setCourseData] = useState(null);
   const [learningOutcomes, setLearningOutcomes] = useState([]);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
+  const [purchaseInfo, setPurchaseInfo] = useState({
+    purchased: false,
+    purchaseDate: null,
+  });
 
   useEffect(() => {
     const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
@@ -46,13 +55,44 @@ const SingleCoursePage = () => {
   }, [courseId]);
 
   const userData = JSON.parse(localStorage.getItem("userData"));
-  const isUserInstructor = userData?.role === "Instructor";
+  const isInstructor = userData?.role === "Instructor";
   const isAdmin = userData?.role === "Admin";
+  const isStudent = userData?.role === "Student";
+
+  useEffect(() => {
+    const checkPurchaseStatus = async () => {
+      if (!userData || !courseId) return;
+
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: userData._id, courseId: courseId }),
+        credentials: "include",
+      };
+
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/check-purchase",
+          requestOptions
+        );
+        const data = await response.json();
+        setPurchaseInfo({
+          purchased: data.purchased,
+          purchaseDate: data.purchaseDate,
+          details: data.details,
+        });
+      } catch (error) {
+        console.error("Failed to check course purchase status:", error);
+      }
+    };
+
+    checkPurchaseStatus();
+  }, [courseId, userData]);
 
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
-        console.log("Fetching data for courseId:", courseId);
+        // console.log("Fetching data for courseId:", courseId);
 
         const response = await fetch(
           `http://localhost:5000/api/fetch-single-course/${courseId}`,
@@ -71,7 +111,7 @@ const SingleCoursePage = () => {
 
         const data = await response.json();
         setCourseData(data);
-        console.log("Course data through API:", data);
+        // console.log("Course data through API:", data);
 
         if (data && data.what_you_will_learn) {
           const outcomes = data.what_you_will_learn
@@ -92,6 +132,8 @@ const SingleCoursePage = () => {
     return <div>Loading...</div>;
   }
 
+  console.log("Fetching data of course:", courseData);
+
   const {
     _id,
     category,
@@ -102,13 +144,15 @@ const SingleCoursePage = () => {
     rating_star,
     students,
     creator,
-    updated_date,
+    updatedAt,
     language,
     actual_price,
     discounted_price,
     what_you_will_learn,
     content,
   } = courseData;
+
+  debugger 
 
   const handleAddToCartClick = () => {
     let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
@@ -128,7 +172,7 @@ const SingleCoursePage = () => {
     if (!itemExists) {
       cartItems.push(newItem);
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
-      setIsAddedToCart(true); 
+      setIsAddedToCart(true);
       window.dispatchEvent(new CustomEvent("cartUpdated"));
     }
   };
@@ -138,14 +182,15 @@ const SingleCoursePage = () => {
       <Navbar />
       <SingleCourseWrapper>
         <CourseIntro>
-          {/* <CourseImage>
-            <img
-              src={`http://localhost:5000/${image.replace(/\\/g, "/")}`}
-              alt={course_name}
-            />
-          </CourseImage> */}
           <CourseDetails>
             <CourseCategory>{category}</CourseCategory>
+            {purchaseInfo.purchased && isStudent && (
+              <div>
+                <CoursePurchasedText>
+                  <span className="purchased">Purchased Course</span>
+                </CoursePurchasedText>
+              </div>
+            )}
             <CourseHead>{course_name}</CourseHead>
             <CourseBody>
               <p className="course-para fs-18">{description}</p>
@@ -155,8 +200,9 @@ const SingleCoursePage = () => {
                 </span>
                 <StarRating rating_star={rating_star} />
                 <span className="rating-count fw-5 fs-14">
-                  ({rating_count})
+                  ({rating_count}) 
                 </span>
+                <d/>
                 <span className="students-count fs-14">
                   {students} students
                 </span>
@@ -165,13 +211,13 @@ const SingleCoursePage = () => {
                 <li>
                   <MdInfo />
                   <span className="course-info-txt">
-                    Created by <strong>{creator}</strong>
+                  Created by <strong>{courseData.course_creator?.displayName || 'Unavailable'}</strong>
                   </span>
                 </li>
                 <li>
                   <TbWorld />
                   <span className="course-info-txt">
-                    Last updated {updated_date}
+                  Last updated {new Date(updatedAt).toLocaleDateString()}
                   </span>
                 </li>
                 <li>
@@ -181,26 +227,48 @@ const SingleCoursePage = () => {
               </CourseInfo>
             </CourseBody>
             <CourseFoot>
-              <CoursePrice>
-                <span className="new-price">${discounted_price}</span>
-                <span className="old-price">${actual_price}</span>
-              </CoursePrice>
+              {isStudent && purchaseInfo.purchased ? (
+                <CoursePurchasedText>
+                  <span className="price">
+                    Price Paid: ${purchaseInfo.details.price}
+                  </span>
+                </CoursePurchasedText>
+              ) : (isStudent && !purchaseInfo.purchased) ||
+                isAdmin ||
+                isInstructor ? (
+                <CoursePrice>
+                  <span className="new-price">${discounted_price}</span>
+                  <span className="old-price">${actual_price}</span>
+                </CoursePrice>
+              ) : null}
             </CourseFoot>
-            {!isUserInstructor && (
-              <CourseButton>
-                <AddToCartButton
-                  onClick={handleAddToCartClick}
-                  disabled={isAddedToCart}
-                >
-                  {isAddedToCart ? (
-                    <>Added to Cart</>
-                  ) : (
-                    <>
-                      <FaShoppingCart /> Add to Cart
-                    </>
-                  )}{" "}
-                </AddToCartButton>
-              </CourseButton>
+            {purchaseInfo.purchased && isStudent ? (
+              <div>
+                <CoursePurchasedText>
+                  <span className="price">
+                    Purchase Date:
+                    {new Date(purchaseInfo.purchaseDate).toLocaleDateString()}
+                  </span>
+                </CoursePurchasedText>
+              </div>
+            ) : (
+              isStudent &&
+              !isInstructor && (
+                <CourseButton>
+                  <AddToCartButton
+                    onClick={handleAddToCartClick}
+                    disabled={isAddedToCart}
+                  >
+                    {isAddedToCart ? (
+                      <>Added to Cart</>
+                    ) : (
+                      <>
+                        <FaShoppingCart /> Add to Cart
+                      </>
+                    )}
+                  </AddToCartButton>
+                </CourseButton>
+              )
             )}
           </CourseDetails>
           <CourseImage>
@@ -232,9 +300,6 @@ const SingleCoursePage = () => {
           <CourseContentSection>
             <CourseScTitle>Course content</CourseScTitle>
             <CourseContentList>
-              {/* {content.map((contentItem, idx) => (
-                <li key={idx}>{contentItem.title}</li>
-              ))} */}
               <CourseLearnList>
                 {content &&
                   content.map((contentItem, idx) => (
@@ -243,7 +308,7 @@ const SingleCoursePage = () => {
                       <div className="content-description">
                         {contentItem.description}
                       </div>
-                      {contentItem.video && (
+                      {purchaseInfo.purchased || isInstructor || isAdmin ? (
                         <video
                           controls
                           src={`http://localhost:5000/${contentItem.video.replace(
@@ -253,10 +318,39 @@ const SingleCoursePage = () => {
                         >
                           Your browser does not support the video tag.
                         </video>
+                      ) : (
+                        <LockedVideo
+                          onClick={() =>
+                            toast.warn("Course not purchased", {
+                              position: "top-right",
+                              autoClose: 2000,
+                              hideProgressBar: false,
+                              closeOnClick: true,
+                              pauseOnHover: true,
+                              draggable: true,
+                              progress: undefined,
+                              theme: "colored",
+                            })
+                          }
+                        >
+                          <FaLock /> Click to Watch Lecture Video
+                        </LockedVideo>
                       )}
                     </ContentItem>
                   ))}
               </CourseLearnList>
+              <ToastContainer
+                position="top-right"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+              />
             </CourseContentList>
           </CourseContentSection>
         </CourseFull>

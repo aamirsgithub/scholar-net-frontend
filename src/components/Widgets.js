@@ -26,6 +26,8 @@ import teamMembers from "../assets/data/teamMembers";
 import StartMeeting from "./Meeting/StartMeeting";
 import { Navigate } from "react-router-dom";
 import CircularLoader from "./Login/CircularLoader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
   // const [courseId, setCourseId] = useState("65fc598b1ce0cb419f503f98");
@@ -37,10 +39,8 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
     lastName,
     email,
     phone,
-    address,
     city,
     state,
-    zip,
     courseCategory,
     language,
     image,
@@ -54,30 +54,61 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
   // console.log("meeting join url", meetingStartUrl)
 
   //fetching meeting details from backend:
-  const fetchMeetingDetails = async () => {
-    const response = await fetch(
-      "http://localhost:5000/api/zoom/meeting-details",
-      {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ instructorId: InstructorId }),
-      }
-    );
+  // const fetchMeetingDetails = async () => {
+  //   const response = await fetch(
+  //     "http://localhost:5000/api/zoom/meeting-details",
+  //     {
+  //       method: "POST",
+  //       credentials: "include",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ instructorId: InstructorId }),
+  //     }
+  //   );
 
-    const data = await response.json();
-    console.log("Meeting data:", data);
-    if (response.ok) {
-      // Set only the needed details in the state of the parent component
-      setMeetingData({
-        startUrl: data.startUrl,
-        joinUrl: data.joinUrl,
-        password: data.password,
-      });
-    } else {
-      alert("Failed to fetch meeting details. Please try again.");
+  //   const data = await response.json();
+  //   // console.log("Meeting data:", data);
+  //   if (response.ok) {
+  //     toast.success("Meeting details fetched successfully!");
+  //     setMeetingData({
+  //       startUrl: data.startUrl,
+  //       joinUrl: data.joinUrl,
+  //       password: data.password,
+  //     });
+  //   } else {
+  //     toast.error(data.message || "Failed to fetch meeting details.");
+  //   }
+  // };
+
+  const fetchMeetingDetails = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/zoom/meeting-details",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ instructorId: InstructorId }),
+        }
+      );
+
+      const data = await response.json();
+      if (response.ok) {
+        setMeetingData({
+          startUrl: data.startUrl,
+          joinUrl: data.joinUrl,
+          password: data.password,
+        });
+        toast.success("Meeting details fetched successfully!");
+      } else {
+        toast.error(data.message || "Failed to fetch meeting details.");
+      }
+    } catch (error) {
+      toast.error("Error fetching meeting details.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -90,40 +121,42 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
   };
 
   const CreateMeeting = async () => {
-    setLoading(true); // Start loading
-  
+    setLoading(true);
     try {
       const response = await fetch("http://localhost:5000/api/zoom/start-meeting", {
         method: "POST",
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ InstructorId }),
       });
-  
+
       const data = await response.json();
-  
       if (response.ok) {
-        setMeetingCreated(data); // Assuming you're storing the meeting data in state
-        alert(`Meeting Created!`);
+        setMeetingCreated(data);
+        toast.success("Meeting created successfully!");
       } else {
-        // Handle non-OK responses
-        alert("Failed to start the meeting. Please try again.");
+        toast.error("Failed to start the meeting.");
       }
     } catch (error) {
-      // Handle errors that occur during the fetch operation
-      console.error("Error starting the meeting:", error);
-      alert("Failed to start the meeting. Please try again.");
+      toast.error("Error starting the meeting.");
     } finally {
-      setLoading(false); // Stop loading regardless of the outcome
+      setLoading(false);
     }
   };
-  
-
   return (
     <>
-      {/* <StartMeeting InstructorId={InstructorId} /> */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
 
       <Card border="light" className="text-center p-0 mb-4">
         <div
@@ -146,7 +179,7 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
             {phone}
             <br />
             <FontAwesomeIcon icon={faHome} className="me-2" />
-            {`${address}, ${city}, ${state}, ${zip}`}
+            {`${city}, ${state}`}
             <br />
             <FontAwesomeIcon icon={faGraduationCap} className="me-2" />
             {courseCategory}
@@ -155,7 +188,6 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
             {language}
           </Card.Text>
 
-
           <Button
             variant="secondary"
             size="sm"
@@ -163,8 +195,12 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
             onClick={CreateMeeting}
             disabled={loading}
           >
-             {/* {loading ? 'Creating Meeting...' : 'Meeting Created'} */}
-            {loading ? <CircularLoader disableShrink /> : <>Create Meeting</>}
+            {/* {loading ? 'Creating Meeting...' : 'Meeting Created'} */}
+            {loading ? (
+              <CircularLoader size={12} disableShrink />
+            ) : (
+              <>Create Meeting</>
+            )}
           </Button>
 
           {meetingCreated && (
@@ -199,7 +235,7 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
             flexDirection: "column",
           }}
         >
-          <div style={{ marginBottom: "10px", width: "650px" }}>
+          {/* <div style={{ marginBottom: "10px", width: "650px" }}>
             <label
               htmlFor="startUrl"
               style={{ display: "block", marginBottom: "5px" }}
@@ -219,13 +255,13 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
                 backgroundColor: "#f9f9f9",
               }}
             />
-          </div>
+          </div> */}
           <div style={{ marginBottom: "10px", width: "650px" }}>
             <label
               htmlFor="joinUrl"
               style={{ display: "block", marginBottom: "5px" }}
             >
-              Join URL:
+              Join URL for Students:
             </label>
             <input
               type="text"
@@ -263,6 +299,150 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
             />
           </div>
         </div>
+      </Card>
+    </>
+  );
+};
+
+export const StudentProfileWidget = ({ profileData, InstructorId }) => {
+  const [meetingData, setMeetingData] = useState(null);
+  const [fetching, setFetching] = useState(false);
+
+  const { firstName, lastName, email, phone, city, state, language, image } =
+    profileData;
+  const profileImage = image
+    ? `http://localhost:5000/${image.replace(/\\/g, "/")}`
+    : Profile1;
+
+  const fetchMeetingDetails = async () => {
+    setFetching(true);
+    const loadingToastId = toast.info("Loading meeting details...", {
+      position: "top-right",
+      autoClose: false,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/zoom/meeting-details",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ instructorId: "6623769a18585ecc625e9dda" }),
+        }
+      );
+
+      const data = await response.json();
+      if (response.ok) {
+        toast.dismiss(loadingToastId);
+        toast.success("Meeting details fetched successfully!");
+        setMeetingData(data);
+      } else {
+        toast.dismiss(loadingToastId);
+        toast.error(data.message || "Failed to fetch meeting details");
+      }
+    } catch (error) {
+      toast.dismiss(loadingToastId);
+      toast.error("Error fetching meeting details");
+      console.error("Error fetching meeting details:", error);
+    } finally {
+      setFetching(false);
+    }
+  };
+
+  return (
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      <Card border="light" className="text-center p-0 mb-4">
+        <div
+          style={{ backgroundImage: `url(${ProfileCover})` }}
+          className="profile-cover rounded-top"
+        />
+        <Card.Body className="pb-5">
+          <Card.Img
+            src={profileImage}
+            alt="Profile Image"
+            className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4"
+          />
+          <Card.Title>{`${firstName} ${lastName}`}</Card.Title>
+          <Card.Subtitle className="fw-normal">{email}</Card.Subtitle>
+          <Card.Text className="text-gray mb-4">
+            <FontAwesomeIcon icon={faEnvelope} className="me-2" /> {email}
+            <br />
+            <FontAwesomeIcon icon={faPhone} className="me-2" /> {phone}
+            <br />
+            <FontAwesomeIcon icon={faHome} className="me-2" />{" "}
+            {`${city}, ${state}`}
+            <br />
+            <FontAwesomeIcon icon={faLanguage} className="me-2" /> {language}
+          </Card.Text>
+          {/* <Button
+            variant="primary"
+            onClick={fetchMeetingDetails}
+            disabled={loading}
+          >
+            {loading ? "Loading..." : "Fetch Meeting Details"}
+          </Button>
+
+          {meetingData && (
+            <div style={{ marginTop: "20px" }}>
+              <div>
+                <strong>Join URL:</strong>{" "}
+                <a
+                  href={meetingData.joinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {meetingData.joinUrl}
+                </a>
+              </div>
+              <div>
+                <strong>Password:</strong> {meetingData.password}
+              </div>
+            </div>
+          )} */}
+
+          <Button
+            variant="primary"
+            onClick={fetchMeetingDetails}
+            disabled={fetching}
+          >
+            Fetch Meeting Details
+          </Button>
+
+          {meetingData && (
+            <div style={{ marginTop: "20px" }}>
+              <Button
+                variant="success"
+                href={meetingData.joinUrl}
+                target="_blank"
+              >
+                Join Meeting
+              </Button>
+              <div>
+                <strong>Password:</strong> {meetingData.password}
+              </div>
+            </div>
+          )}
+        </Card.Body>
       </Card>
     </>
   );
