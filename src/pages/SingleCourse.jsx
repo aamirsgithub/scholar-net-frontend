@@ -152,8 +152,6 @@ const SingleCoursePage = () => {
     content,
   } = courseData;
 
-  debugger 
-
   const handleAddToCartClick = () => {
     let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
     const newItem = {
@@ -200,9 +198,9 @@ const SingleCoursePage = () => {
                 </span>
                 <StarRating rating_star={rating_star} />
                 <span className="rating-count fw-5 fs-14">
-                  ({rating_count}) 
+                  ({rating_count})
                 </span>
-                <d/>
+                <d />
                 <span className="students-count fs-14">
                   {students} students
                 </span>
@@ -211,13 +209,16 @@ const SingleCoursePage = () => {
                 <li>
                   <MdInfo />
                   <span className="course-info-txt">
-                  Created by <strong>{courseData.course_creator?.displayName || 'Unavailable'}</strong>
+                    Created by{" "}
+                    <strong>
+                      {courseData.course_creator?.displayName || "Unavailable"}
+                    </strong>
                   </span>
                 </li>
                 <li>
                   <TbWorld />
                   <span className="course-info-txt">
-                  Last updated {new Date(updatedAt).toLocaleDateString()}
+                    Last updated {new Date(updatedAt).toLocaleDateString()}
                   </span>
                 </li>
                 <li>
