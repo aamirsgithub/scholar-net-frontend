@@ -8,20 +8,16 @@ export const MainImg = styled.img`
 `;
 
 export const Card = styled.div`
-  width: 390px;
-  // height: 490px;
-  // padding: 48px;
+width: 450px;
+padding: 30px;
   border-radius: 24px;
   background: #fff;
-  // @media (max-width: 1050px) {
-  //   padding: 48px 36px;
-  // }
-  // @media (max-width: 990px) {
-  //   padding: 48px 18px;
-  // }
-  // @media (max-width: 380px) {
-  //   padding: 48px 8px;
-  // }
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
 `;
 
 export const SignUpText = styled.div`
@@ -162,6 +158,12 @@ export const ConstraintsText = styled.div`
   line-height: 24px; /* 160% */
   white-space: nowrap;
   // width: 180px;
+
+
+  width: 230px;
+  display: flex;
+  justify-content: flex-start;
+  align-self: flex-start;
 `;
 
 export const WeakText = styled.div`

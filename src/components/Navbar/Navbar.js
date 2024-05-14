@@ -32,7 +32,6 @@ const Navbar = ({ totalItems }) => {
   const isAdmin = user?.role === "Admin";
   const isStudent = user?.role === "Student";
 
-
   const handleLogout = () => {
     localStorage.removeItem("cartItems");
     logout();
@@ -96,20 +95,19 @@ const Navbar = ({ totalItems }) => {
     <NavbarContainer>
       <FlexDiv style={{ justifyContent: "flex-start" }}>
         <LogoImg src={Logo} alt="App Logo" style={{ marginRight: "10px" }} />
+        <Link href="/">Home</Link>
         <Link href="">Categories</Link>
         <SearchBar />
       </FlexDiv>
 
       <FlexDiv>
         {userData && userData.role === "Instructor" && (
-          <Link href="/instructor">Instructor</Link>
+          <Link href="/instructor-profile">Instructor</Link>
         )}
         {userData && userData.role === "Student" && (
           <Link href="/student-profile">Student</Link>
         )}
-        {userData && userData.role === "Admin" && (
-          <Link href="/admin">Admin</Link>
-        )}
+        {userData && userData.role === "Admin" && <Link href="/">Admin</Link>}
 
         {!userData && (
           <>
@@ -145,7 +143,7 @@ const Navbar = ({ totalItems }) => {
                 <DropdownLink href="">Favourite Courses</DropdownLink>
               </DropdownSection>
               <DropdownSection>
-                <DropdownLink href="">
+                {/* <DropdownLink href="">
                   <div
                     style={{
                       display: "flex",
@@ -156,7 +154,7 @@ const Navbar = ({ totalItems }) => {
                     <div>{userData.role}'s </div>
                     <div> Dashboard</div>
                   </div>
-                </DropdownLink>
+                </DropdownLink> */}
 
                 {userData.role === "Instructor" && (
                   <DropdownLink href="/upload-course">Courses</DropdownLink>
@@ -166,7 +164,9 @@ const Navbar = ({ totalItems }) => {
                 )}
                 <DropdownLink href="">Notifications</DropdownLink>
                 <DropdownSection>
-                  <DropdownLink onClick={handleSettings}>Go to Settings</DropdownLink>
+                  <DropdownLink onClick={handleSettings}>
+                    Go to Settings
+                  </DropdownLink>
                   <DropdownLink onClick={handleLogout}>Logout</DropdownLink>
                 </DropdownSection>
               </DropdownSection>

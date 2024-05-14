@@ -1,26 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import { other_images } from "../utils/images";
+import HeroImg from "../assets/images/elearning000.jpg"
 
 const Hero = () => {
   return (
     <HeroWrapper className="bg-black">
       <div className="container h-100 flex">
-        <div className="hero-content">
+        {/* <div className="hero-content">
           <h1>Save big. Learn big.</h1>
           <p>
             Shop our big sale for courses from $9.99. If you wnat to learn it,
             chances are we've got it. Ends Aug. 31.
           </p>
-        </div>
+        </div> */}
       </div>
     </HeroWrapper>
   );
 };
 
 const HeroWrapper = styled.div`
-  background: url(${other_images.hero_img}) center/cover no-repeat;
-  height: 300px;
+  background: url(${HeroImg}) center/cover no-repeat;
+  height: 700px;
 
   .container {
     .hero-content {

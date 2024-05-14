@@ -22,8 +22,8 @@ export const CourseIntro = styled.div`
 `;
 
 export const CourseImage = styled.div`
-width: 90%;
-margin-top: 25px;
+  width: 90%;
+  margin-top: 25px;
 `;
 
 export const CourseFoot = styled.div``;
@@ -195,11 +195,9 @@ export const CourseContentList = styled.ul`
   }
 `;
 
-
-
 export const HomeWrapper = styled.div`
-transition: filter 0.3s ease;
-filter: ${(props) => (props.isPopupVisible ? "blur(3px)" : "none")};
+  transition: filter 0.3s ease;
+  filter: ${(props) => (props.isPopupVisible ? "blur(3px)" : "none")};
 `;
 
 export const Overlay = styled.div`
@@ -212,7 +210,6 @@ export const Overlay = styled.div`
   z-index: 50; // Ensure this is below your popup but above other content
   display: ${(props) => (props.isPopupVisible ? "block" : "none")};
 `;
-
 
 // Additional styling for CourseLearnList to handle the content titles, descriptions, and videos
 export const ContentItem = styled.li`
@@ -283,14 +280,51 @@ export const LearnItemStyled = styled.li`
 `;
 
 export const LockedVideo = styled.div`
-    opacity: 0.6;
-    background-color: black;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 200px; // Adjust based on your actual video player size
-    font-size: 20px;
-    text-align: center;
-    border: 2px dashed red;
+  opacity: 0.6;
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px; // Adjust based on your actual video player size
+  font-size: 20px;
+  text-align: center;
+  border: 2px dashed red;
 `;
+
+export const PhotoGalleryContainer = styled("div")({
+  position: "relative",
+  width: "100%",
+  height: "500px", // Adjust the height as needed
+  overflow: "hidden",
+});
+
+export const GalleryImage = styled("img")({
+  width: "100%",
+  height: "100%",
+  objectFit: "cover", 
+});
+
+export const GalleryButton = styled("button")({
+  position: "absolute",
+  top: "50%",
+  transform: "translateY(-50%)",
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  color: "white",
+  border: "none",
+  cursor: "pointer",
+  padding: "10px",
+  zIndex: 100,
+  transition: "0.3s",
+  "&:hover": {
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
+  },
+});
+
+export const LeftButton = styled(GalleryButton)({
+  left: "10px",
+});
+
+export const RightButton = styled(GalleryButton)({
+  right: "10px",
+});

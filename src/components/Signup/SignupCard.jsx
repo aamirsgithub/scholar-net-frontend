@@ -255,7 +255,7 @@ const SignupCard = () => {
           // login(data.response);
           navigate("/login");
         }, 2000);
-        // setIsVerifyEmailPopupVisible(true); 
+        // setIsVerifyEmailPopupVisible(true);
       } else {
         setSnackbarMessage(
           data.message || "An error occurred. Please try again."
@@ -403,10 +403,11 @@ const SignupCard = () => {
               alignItems: "flex-start",
               justifyContent: "space-between",
               marginTop: "15px",
+              width: "390px",
             }}
           >
             <ConstraintsText>
-              <ul
+              {/* <ul
                 style={{
                   padding: "0",
                   marginLeft: "20px",
@@ -415,9 +416,9 @@ const SignupCard = () => {
                 <li>8 characters minimum</li>
                 <li>Upper & lower case letters</li>
                 <li>A digit & a symbol</li>
-              </ul>
+              </ul> */}
 
-              {/* <ul style={{ padding: "0", marginLeft: "20px" }}>
+              <ul style={{ padding: "0", marginLeft: "20px" }}>
                 <li
                   style={{
                     color: passwordConditions.minLength ? "green" : "inherit",
@@ -425,40 +426,43 @@ const SignupCard = () => {
                 >
                   8 characters minimum
                 </li>
-                <li
-                  style={{
-                    color:
-                      passwordConditions.upperCase &&
-                      passwordConditions.lowerCase
-                        ? "green"
-                        : "inherit",
-                  }}
-                >
-                  Upper & lower case letters
+                <li>
+                  <span
+                    style={{
+                      color: passwordConditions.upperCase ? "green" : "inherit",
+                    }}
+                  >
+                    Upper case letter
+                  </span>
+                  <br />
+                  <span
+                    style={{
+                      color: passwordConditions.lowerCase ? "green" : "inherit",
+                    }}
+                  >
+                    {" "}
+                    lower case letter
+                  </span>
                 </li>
-                <li
-                  style={{
-                    color:
-                      passwordConditions.digit && passwordConditions.symbol
-                        ? "green"
-                        : "inherit",
-                  }}
-                >
-                  A digit & a symbol
+                <li>
+                  <span
+                    style={{
+                      color: passwordConditions.digit ? "green" : "inherit",
+                    }}
+                  >
+                    A digit
+                  </span>{" "}
+                  &amp;
+                  <span
+                    style={{
+                      color: passwordConditions.symbol ? "green" : "inherit",
+                    }}
+                  >
+                    {" "}
+                    a symbol
+                  </span>
                 </li>
-              </ul> */}
-
-              {/* <ul style={{ padding: "0", marginLeft: "20px" }}>
-                 <li style={{ color: passwordConditions.minLength ? 'green' : 'inherit' }}>8 characters minimum</li>
-                  <li>
-                    <span style={{ color: passwordConditions.upperCase ? 'green' : 'inherit' }}>Upper case letter</span> &amp; 
-                    <span style={{ color: passwordConditions.lowerCase ? 'green' : 'inherit' }}> lower case letter</span>
-                  </li>
-                  <li>
-                      <span style={{ color: passwordConditions.digit ? 'green' : 'inherit' }}>A digit</span> &amp; 
-                      <span style={{ color: passwordConditions.symbol ? 'green' : 'inherit' }}> a symbol</span>
-                  </li>
-             </ul> */}
+              </ul>
             </ConstraintsText>
 
             <TextProgressContainer style={{ marginTop: "15px" }}>
@@ -492,7 +496,7 @@ const SignupCard = () => {
             </TextProgressContainer>
           </FlexDiv>
 
-          {/* <FlexDiv
+          <FlexDiv
             style={{
               alignItems: "flex-start",
               justifyContent: "flex-start",
@@ -505,10 +509,10 @@ const SignupCard = () => {
               style={{ marginTop: "5px" }}
             />
             <TermsCondText>
-              By clicking Sign Up, you are agreeing to the <span>T&Cs</span> and{" "}
-              <span>Privacy Policy</span>
+              By clicking Sign Up, you are agreeing to the{" "}
+              <span>ScholarNet T&Cs</span> and <span>Privacy Policy</span>
             </TermsCondText>
-          </FlexDiv> */}
+          </FlexDiv>
           <Btn onClick={handleSignUp}>
             <ContinueDiv>
               {loading ? (

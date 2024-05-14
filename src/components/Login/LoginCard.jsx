@@ -45,7 +45,8 @@ const LoginCard = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isSubmitAttempted, setIsSubmitAttempted] = useState(false);
-  const [isVerifyEmailPopupVisible, setIsVerifyEmailPopupVisible] = useState(false);
+  const [isVerifyEmailPopupVisible, setIsVerifyEmailPopupVisible] =
+    useState(false);
 
   const navigate = useNavigate();
   const isLaptop = useMediaQuery("(max-width:1300px)");
@@ -138,7 +139,7 @@ const LoginCard = () => {
         setSnackbarOpen(true);
         // login(data.response);
         setTimeout(() => {
-          localStorage.setItem('showVerifyEmailPopup', 'true');
+          localStorage.setItem("showVerifyEmailPopup", "true");
           login(data.user);
           navigate("/");
           // setIsVerifyEmailPopupVisible(true);
@@ -263,7 +264,7 @@ const LoginCard = () => {
                   <ContinueText>Continue</ContinueText>
                   <Arrow alt="" src={ArrowImg} />
                 </FlexDiv>
-              )} 
+              )}
             </ContinueDiv>
           </Btn>
           <FlexDiv

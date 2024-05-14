@@ -1,13 +1,31 @@
 import styled from "styled-components";
 
+// export const NavbarContainer = styled.div`
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   background-color: white;
+//   padding: 10px 20px;
+//   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+// `;
+
 export const NavbarContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: white;
-  padding: 10px 20px;
+  padding: 5px 20px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
- 
+  position: fixed; /* Make navbar fixed */
+  top: 20px; /* Add top margin to show some background */
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensure it's above other content */
+  margin: 0 auto; /* Center it on the page */
+  width: 100%; /* Take full width */
+  box-sizing: border-box; /* Include padding in width calculation */
+  max-width: 900px; /* Maximum width of navbar */
+  border-radius: 10px;
 `;
 
 export const LogoAndCategories = styled.div`
@@ -31,10 +49,11 @@ export const Link = styled.a`
 `;
 
 export const ProfileAvatar = styled.div`
-  position: relative;
+  position: absolute;
   display: flex;
   align-items: center;
   transition: transform 0.3s ease;
+  right: -3%;
 
   &:hover,
   &:focus {
@@ -44,8 +63,8 @@ export const ProfileAvatar = styled.div`
 `;
 
 export const ProfileImage = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 49px;
+  height: 49px;
   border-radius: 50%;
   cursor: pointer;
 `;
@@ -90,7 +109,6 @@ export const DropdownLink = styled.a`
 
   &:hover {
     color: blue;
-
   }
 `;
 

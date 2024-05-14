@@ -6,12 +6,15 @@ export const MainImg = styled.img`
 `;
 
 export const Card = styled.div`
-  width: 406px;
-//   height: 490px;
-//   padding: 48px;
+  width: 450px;
+  padding: 30px;
   border-radius: 24px;
   background: #fff;
 
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const SignUpText = styled.div`
@@ -129,6 +132,11 @@ export const CredenialsText = styled.div`
   line-height: 16px;
   letter-spacing: 0em;
   text-align: left;
+
+  width: 390px;
+  display: flex;
+  justify-content: flex-start;
+  align-self: flex-start;
 `;
 
 export const ForgotPass = styled.div`
