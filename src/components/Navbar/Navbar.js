@@ -21,7 +21,7 @@ import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../authentication/Auth";
 
-const Navbar = ({ totalItems }) => {
+const Navbar = ({ totalItems, categoriesRef }) => {
   const navigate = useNavigate();
   const { logout } = useAuth();
   const [userData, setUserData] = useState(null);
@@ -91,12 +91,21 @@ const Navbar = ({ totalItems }) => {
     }
   }, []);
 
+  const handleCategoriesClick = (e) => {
+    e.preventDefault();
+    categoriesRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <NavbarContainer>
       <FlexDiv style={{ justifyContent: "flex-start" }}>
         <LogoImg src={Logo} alt="App Logo" style={{ marginRight: "10px" }} />
         <Link href="/">Home</Link>
-        <Link href="">Categories</Link>
+        {/* <Link href="#categories" 
+        onClick={handleCategoriesClick}
+        >
+          Categories
+        </Link> */}
         <SearchBar />
       </FlexDiv>
 

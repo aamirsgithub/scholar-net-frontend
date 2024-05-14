@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef , forwardRef } from "react";
 import styled from "styled-components";
 import Tabs from "./Tabs";
 
 const CourseList = () => {
-  const [courses, setCourses] = useState([]);
+  // const CourseList = forwardRef((props, ref) => {
+    const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -31,7 +32,9 @@ const CourseList = () => {
   // console.log("fetched courses from database: ", courses);
 
   return (
-    <CoursesListWrapper>
+    <CoursesListWrapper
+    //  ref={ref}
+    >
       <div className="container">
         <div className="courses-list-top">
           <h2>A broad selection of courses</h2>

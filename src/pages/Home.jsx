@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef  } from "react";
 import Hero from "../components/Hero";
 import Navbar from "../components/Navbar/Navbar";
 import CoursesList from "../components/CourseList";
@@ -7,8 +7,8 @@ import Footer from "../components/Footer/FooterCard";
 import VerifyEmailPopup from "../components/Login/VerifyEmailPopup";
 import { HomeWrapper, Overlay } from "./style";
 import MarqueeText from "../components/common/MarqueeText";
-// import HomePageBottom from "../assets/images/homepagebottom.svg";
-import HomePageBottom from "../assets/images/img90.svg";
+import HomePageBottom from "../assets/images/homepagebottom.svg";
+// import HomePageBottom from "../assets/images/img90.svg";
 import PhotoGallery from "../components/PhotoGallery";
 // import Img70 from "../assets/images/881-ai.svg";
 import Img772 from "../assets/images/772-ai.svg";
@@ -21,6 +21,7 @@ import Img892 from "../assets/images/892-ai.svg";
 const Home = () => {
   const [isSupportGhazaPopupVisible, setIsSupportGhazaPopupVisible] =
     useState(false);
+    const categoriesRef = useRef(null);
 
   useEffect(() => {
     const shouldShowPopup =
@@ -42,12 +43,12 @@ const Home = () => {
       <Overlay isPopupVisible={isSupportGhazaPopupVisible} />
       <HomeWrapper isPopupVisible={isSupportGhazaPopupVisible}>
         <div className="holder">
-          <Navbar />
+          <Navbar categoriesRef={categoriesRef}/>
           {/* <Hero /> */}
           <PhotoGallery images={images} />
 
           <MarqueeText />
-          <CoursesList />
+          <CoursesList ref={categoriesRef} />
 
           {/* <CategoriesList /> */}
           <img src={HomePageBottom} alt="" />
