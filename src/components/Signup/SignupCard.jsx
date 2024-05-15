@@ -90,7 +90,6 @@ const SignupCard = () => {
   });
   const [isSubmitAttempted, setIsSubmitAttempted] = useState(false);
   const navigate = useNavigate();
-  //here we are seting role of the user who is signing up
   const [role, setRole] = useState("");
 
   const emailRegex = /^[^\d\s][\w.-]*[^\d\s]@\S+\.\S+$/;
@@ -99,31 +98,19 @@ const SignupCard = () => {
     const emailInput = event.target.value;
     setEmail(emailInput);
     setEmailError("");
-  
+
     if (isSubmitAttempted) {
       if (!emailInput) {
         setEmailError("Email field is empty.");
       } else if (!emailRegex.test(emailInput)) {
-        setEmailError("Invalid email. Please include an email that doesn't start or end with a number before '@'.");
+        setEmailError(
+          "Invalid email. Please include an email that doesn't start or end with a number before '@'."
+        );
       } else {
         setEmailError("");
       }
     }
   };
-  // const handleEmailChange = (event) => {
-  //   const emailInput = event.target.value;
-  //   setEmail(emailInput);
-  //   setEmailError("");
-  //   if (isSubmitAttempted) {
-  //     if (!emailInput) {
-  //       setEmailError("Email field is empty.");
-  //     } else if (!emailRegex.test(emailInput)) {
-  //       setEmailError("Email format incorrect.");
-  //     } else {
-  //       setEmailError("");
-  //     }
-  //   }
-  // };
 
   const handlePasswordChange = (event) => {
     const inputPassword = event.target.value;
@@ -287,7 +274,7 @@ const SignupCard = () => {
       confirmPasswordError ||
       formErrors.name
     ) {
-      // Prevent form submission and show an error message.
+    
       setSnackbarMessage("Please correct the errors before submitting.");
       setSnackbarVariant("filled");
       setSnackbarColor("error");
