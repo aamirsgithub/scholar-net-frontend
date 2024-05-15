@@ -25,6 +25,8 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { FlexDiv } from "../common/Style";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CircularLoader from "../Login/CircularLoader";
+import LinearColor from "../Login/LinearColor";
 
 const StyledFormHelperText = styled(MuiFormHelperText)`
   font-size: 5rem;
@@ -604,7 +606,16 @@ const UploadCourse = () => {
                 </Button>
               </Grid>
             </Grid>
-            {isLoading && <Typography>Loading...</Typography>}
+            <FlexDiv style={{ gap: "1rem" }}>
+              {isLoading && (
+                <Typography style={{ fontSize: "2rem" }}>
+                  Ai Profanity Check in Progress...
+                </Typography>
+              )}
+
+              {isLoading && <CircularLoader size={30} color="black" />}
+            </FlexDiv>
+            {isLoading && <LinearColor />}
             {feedbackMessage && (
               <Typography
                 color="secondary"
