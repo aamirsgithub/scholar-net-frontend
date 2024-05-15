@@ -4,10 +4,12 @@ import Navbar from "../components/Navbar/Navbar";
 import styled from "styled-components";
 
 import isEqual from "lodash/isEqual";
+import { FlexDiv } from "../components/common/Style";
+import { Typography } from "@mui/material";
 
 const PageWrapper = styled.div`
   padding: 2rem;
-  margin-top: 15rem;
+  margin-top: 5rem;
 `;
 
 const CoursesContainer = styled.div`
@@ -68,6 +70,17 @@ const MyCoursesPage = () => {
     <>
       <Navbar />
       <PageWrapper>
+        <FlexDiv>
+          <Typography
+            style={{
+              color: "orange",
+             padding: "2rem",
+              fontSize: "3rem",
+            }}
+          >
+            Students's Courses
+          </Typography>
+        </FlexDiv>
         <CoursesContainer>
           {courses.map((course) => (
             <Course key={course._id} {...course} myCourse={true} />

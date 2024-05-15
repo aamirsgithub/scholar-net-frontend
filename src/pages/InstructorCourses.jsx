@@ -4,17 +4,19 @@ import Navbar from "../components/Navbar/Navbar";
 import styled from "styled-components";
 
 import isEqual from "lodash/isEqual";
+import { Typography } from "@mui/material";
+import { FlexDiv } from "../components/common/Style";
 
 const PageWrapper = styled.div`
-  padding: 2rem; 
-  margin-top: 15rem;
+  padding: 2rem;
+  margin-top: 5rem;
 `;
 
 const CoursesContainer = styled.div`
   display: flex;
-  flex-wrap: wrap; 
-  gap: 20px; 
-  justify-content: center; 
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 `;
 
 const InstructorCourses = () => {
@@ -68,6 +70,17 @@ const InstructorCourses = () => {
     <>
       <Navbar />
       <PageWrapper>
+        <FlexDiv>
+          <Typography
+            style={{
+              color: "orange",
+             padding: "2rem",
+              fontSize: "3rem",
+            }}
+          >
+            Instructors's Courses
+          </Typography>
+        </FlexDiv>
         <CoursesContainer>
           {courses.map((course) => (
             <Course key={course._id} {...course} myCourse={true} />
