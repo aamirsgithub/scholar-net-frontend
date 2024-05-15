@@ -70,10 +70,12 @@ const UploadCourse = () => {
   const [previewUrl, setPreviewUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [feedbackType, setFeedbackType] = useState("error");
+
   const descriptionWordCount = courseData.description
     .trim()
     .split(/\s+/).length;
-  const isDescriptionTooLong = descriptionWordCount > 30;
+  const isDescriptionTooLong = descriptionWordCount > 25;
 
   useEffect(() => {
     if (selectedImage) {
@@ -86,7 +88,7 @@ const UploadCourse = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "description" && value.trim().split(/\s+/).length > 30) {
+    if (name === "description" && value.trim().split(/\s+/).length > 25) {
       return;
     }
     setCourseData((prev) => ({ ...prev, [name]: value }));
@@ -149,6 +151,7 @@ const UploadCourse = () => {
         setFeedbackMessage(
           "Profanity detected! Please upload a different video."
         );
+        setFeedbackType("error");
         toast.error("Profanity detected! Video Revoked.");
         courseData.content[index].video = null;
         courseData.content[index].videoPreview = "";
@@ -159,6 +162,7 @@ const UploadCourse = () => {
           return { ...prevState, content: updatedContent };
         });
       } else {
+        setFeedbackType("success");
         toast.success("Your video is clean and allowed for upload.");
         setFeedbackMessage("Your video is clean and allowed for upload.");
         const newContent = [...courseData.content];
@@ -168,6 +172,7 @@ const UploadCourse = () => {
     } catch (error) {
       toast.error("Failed to process the video.");
       setFeedbackMessage("Failed to process the video.");
+      setFeedbackType("error");
     } finally {
       setIsLoading(false);
     }
@@ -201,7 +206,7 @@ const UploadCourse = () => {
     e.preventDefault();
     if (isDescriptionTooLong) {
       setFeedbackMessage(
-        "Description exceeds the word limit of 30 words. Please shorten it."
+        "Description exceeds the word limit of 25 words. Please shorten it."
       );
       return;
     }
@@ -228,6 +233,7 @@ const UploadCourse = () => {
       setFeedbackMessage(
         "Please fill out all fields in the Course Information Section before submitting."
       );
+      setFeedbackType("error");
       return;
     }
 
@@ -238,6 +244,7 @@ const UploadCourse = () => {
       setFeedbackMessage(
         "Please complete all fields in Video Content Section before submitting."
       );
+      setFeedbackType("error");
       return;
     }
 
@@ -300,10 +307,12 @@ const UploadCourse = () => {
       setFeedbackMessage(
         "Course uploaded successfully! You can submit another course."
       );
+      setFeedbackType("success");
     } catch (error) {
       console.error("There was an error uploading the course:", error);
       toast.error("Failed to upload the course.");
       setFeedbackMessage("Failed to upload the course.");
+      setFeedbackType("error");
     } finally {
       setIsLoading(false);
     }
@@ -440,7 +449,7 @@ const UploadCourse = () => {
                     {key === "description" && (
                       <StyledFormHelperText>
                         Description must be short.
-                        {`${descriptionWordCount}/30 words`}
+                        {`${descriptionWordCount}/25 words`}
                       </StyledFormHelperText>
                     )}
 
@@ -609,17 +618,26 @@ const UploadCourse = () => {
             <FlexDiv style={{ gap: "1rem" }}>
               {isLoading && (
                 <Typography style={{ fontSize: "2rem" }}>
-                  Ai Profanity Check in Progress...
+                  Ai Profanity Checking in Progress...
+                </Typography>
+              )}
+              {isLoading && (
+                <Typography style={{ fontSize: "1rem" }}>
+                  Our Ai Model will respond soon.
                 </Typography>
               )}
 
               {isLoading && <CircularLoader size={30} color="black" />}
             </FlexDiv>
             {isLoading && <LinearColor />}
+
             {feedbackMessage && (
               <Typography
-                color="secondary"
-                style={{ margin: "20px 0", fontSize: "2rem" }}
+                style={{
+                  color: feedbackType === "success" ? "green" : "red",
+                  margin: "20px 0",
+                  fontSize: "2rem",
+                }}
               >
                 {feedbackMessage}
               </Typography>

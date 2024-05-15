@@ -235,7 +235,7 @@ export const Overlay = styled.div`
   display: ${(props) => (props.isPopupVisible ? "block" : "none")};
 `;
 
-// Additional styling for CourseLearnList to handle the content titles, descriptions, and videos
+
 export const ContentItem = styled.li`
   //   display: flex;
   //   justify-content: center;
