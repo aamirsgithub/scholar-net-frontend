@@ -170,7 +170,7 @@ const Navbar = ({ totalItems }) => {
               </DropdownSection>
               <DropdownSection>
                 {userData.role === "Instructor" && (
-                  <DropdownLink href="/upload-course">Courses</DropdownLink>
+                  <DropdownLink href="/upload-course">Create Courses</DropdownLink>
                 )}
                 {userData.role === "Admin" && (
                   <DropdownLink href="">Manage Courses</DropdownLink>

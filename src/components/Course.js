@@ -28,6 +28,8 @@ const Course = ({
     });
   };
 
+  console.log("CompleteCourse:", CompleteCourse);
+
   const imageUrl = image
     ? myCourse
       ? image
@@ -60,13 +62,24 @@ const Course = ({
         />
       </div>
       <div className="item-body">
-        <h5 className="item-name">{course_name}</h5>
-        <span className="item-creator">{creator}</span>
+        <div>
+          <h5 className="item-name">{course_name}</h5>
+        </div>
+
+        <span className="item-creator">
+          Created By: {CompleteCourse.instructor_name}
+        </span>
+        <br />
+        <span className="item-creator">
+          Email: {CompleteCourse.instructor_email}
+        </span>
+
         <div className="item-rating">
           <span className="rating-star-val">{rating_star}</span>
           <StarRating rating_star={rating_star} />
           <span className="rating-count">({rating_count})</span>
         </div>
+
         <div className="item-price">
           <span className="item-price-new">${discounted_price}</span>
           <span className="item-price-old">${actual_price}</span>
@@ -85,6 +98,7 @@ const Course = ({
 };
 
 const CourseCard = styled.div`
+  width: 320px;
   cursor: pointer;
   margin-bottom: 20px;
   border-radius: 5px;

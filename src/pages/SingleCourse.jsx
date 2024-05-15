@@ -135,7 +135,7 @@ const SingleCoursePage = () => {
     return <div>Loading...</div>;
   }
 
-  console.log("Fetching data of course:", courseData);
+  // console.log("Fetching data of course:", courseData);
 
   const {
     _id,
