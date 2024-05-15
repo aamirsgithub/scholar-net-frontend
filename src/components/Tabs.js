@@ -39,10 +39,7 @@ const Tabs = ({ courses }) => {
 
         <div className="tabs-body">
           {courses
-            .filter(
-              (course) =>
-                course.category.trim() === activeTab
-            )
+            .filter((course) => course.category.trim() === activeTab)
             .map((course) => (
               <Course key={course._id} {...course} CompleteCourse={course} />
             ))}
@@ -51,97 +48,6 @@ const Tabs = ({ courses }) => {
     </TabsWrapper>
   );
 };
-
-// const PYTHON = "python";
-// const WEB_DEVELOPMENT = "web development";
-// const DATA_SCIENCE = "data science";
-// const AWS = "aws";
-// const DESIGN = "design";
-// const MARKETING = "marketing";
-
-// const Tabs = ({ courses }) => {
-//   console.log("Courses in Tab.js before filter:", courses);
-//   const [activeTab, setActiveTab] = useState(PYTHON);
-//   const tabHandler = (category) => {
-//     setActiveTab(category);
-//   };
-//   console.log("active tab:", activeTab);
-//   console.log(
-//     "filtered courses",
-//     courses.filter((course) => course.category === activeTab)
-//   );
-
-//   return (
-//     <TabsWrapper>
-//       <div className="tabs">
-//         <ul className="flex flex-wrap">
-//           <li className="tabs-head-item">
-//             <button
-//               type="button"
-//               className={`tab-btn ${activeTab === PYTHON}`}
-//               onClick={() => tabHandler(PYTHON)}
-//             >
-//               Python
-//             </button>
-//           </li>
-//           <li className="tabs-head-item">
-//             <button
-//               type="button"
-//               className={`tab-btn ${activeTab === WEB_DEVELOPMENT}`}
-//               onClick={() => tabHandler(WEB_DEVELOPMENT)}
-//             >
-//               Web Development
-//             </button>
-//           </li>
-//           <li className="tabs-head-item">
-//             <button
-//               type="button"
-//               className={`tab-btn ${activeTab === DATA_SCIENCE}`}
-//               onClick={() => tabHandler(DATA_SCIENCE)}
-//             >
-//               Data Science
-//             </button>
-//           </li>
-//           <li className="tabs-head-item">
-//             <button
-//               type="button"
-//               className={`tab-btn ${activeTab === AWS}`}
-//               onClick={() => tabHandler(AWS)}
-//             >
-//               AWS Certification
-//             </button>
-//           </li>
-//           <li className="tabs-head-item">
-//             <button
-//               type="button"
-//               className={`tab-btn ${activeTab === DESIGN}`}
-//               onClick={() => tabHandler(DESIGN)}
-//             >
-//               Design
-//             </button>
-//           </li>
-//           <li className="tabs-head-item">
-//             <button
-//               type="button"
-//               className={`tab-btn ${activeTab === MARKETING}`}
-//               onClick={() => tabHandler(MARKETING)}
-//             >
-//               Marketing
-//             </button>
-//           </li>
-//         </ul>
-
-//         <div className="tabs-body">
-//           {courses
-//             .filter((course) => course.category === activeTab)
-//             .map((course) => (
-//               <Course key={course._id} {...course} CompleteCourse={course} />
-//             ))}
-//         </div>
-//       </div>
-//     </TabsWrapper>
-//   );
-// };
 
 const TabsWrapper = styled.div`
   .tabs {

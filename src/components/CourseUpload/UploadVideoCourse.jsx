@@ -47,10 +47,17 @@ const categories = [
 ];
 
 const UploadCourse = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [feedbackType, setFeedbackType] = useState("error");
+  const [userData, setUserData] = useState({ displayName: "" });
+
   const [courseData, setCourseData] = useState({
     course_name: "",
     description: "",
-    creator: "",
+    creator: " ",
     language: "",
     category: "",
     actual_price: "",
@@ -66,11 +73,18 @@ const UploadCourse = () => {
       },
     ],
   });
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [feedbackMessage, setFeedbackMessage] = useState("");
-  const [feedbackType, setFeedbackType] = useState("error");
+
+  useEffect(() => {
+    const userDataFromStorage = localStorage.getItem("userData");
+    if (userDataFromStorage) {
+      const parsedUserData = JSON.parse(userDataFromStorage);
+      setUserData(parsedUserData);
+      setCourseData((prevState) => ({
+        ...prevState,
+        creator: parsedUserData.displayName,
+      })); // Set creator from userData
+    }
+  }, []);
 
   const descriptionWordCount = courseData.description
     .trim()
@@ -400,8 +414,8 @@ const UploadCourse = () => {
                 fontWeight: "600",
               }}
             >
-              -------------------------------------Course Information
-              Section-------------------------------------
+              -----------------------------Course Information
+              Section------------------------------
             </FlexDiv>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -469,8 +483,8 @@ const UploadCourse = () => {
                 fontWeight: "600",
               }}
             >
-              -----------------------------------------Video Content
-              Section-----------------------------------------
+              -------------------------------Video Content
+              Section-------------------------------
             </FlexDiv>
             <Grid container spacing={2}>
               {courseData.content.map((contentItem, index) => (

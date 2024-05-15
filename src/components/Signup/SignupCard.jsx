@@ -394,7 +394,7 @@ const SignupCard = () => {
               </RRBMenuItem> */}
               <RRBMenuItem value="Student">Student</RRBMenuItem>
               <RRBMenuItem value="Instructor">Instructor</RRBMenuItem>
-              <RRBMenuItem value="Admin">Admin</RRBMenuItem>
+              {/* <RRBMenuItem value="Admin">Admin</RRBMenuItem> */}
             </RRBSelect>
           </RRBFormControl>
 
@@ -496,7 +496,7 @@ const SignupCard = () => {
             </TextProgressContainer>
           </FlexDiv>
 
-          <FlexDiv
+          {/* <FlexDiv
             style={{
               alignItems: "flex-start",
               justifyContent: "flex-start",
@@ -512,7 +512,7 @@ const SignupCard = () => {
               By clicking Sign Up, you are agreeing to the{" "}
               <span>ScholarNet T&Cs</span> and <span>Privacy Policy</span>
             </TermsCondText>
-          </FlexDiv>
+          </FlexDiv> */}
           <Btn onClick={handleSignUp}>
             <ContinueDiv>
               {loading ? (

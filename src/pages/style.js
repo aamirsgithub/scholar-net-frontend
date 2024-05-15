@@ -205,18 +205,12 @@ export const CourseContentSection = styled.div`
   // padding: 12px 28px 22px;
 `;
 
-export const CourseContentList = styled.ul`
-  li {
-    background-color: #f7f9fa;
-    padding: 12px 18px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    margin-bottom: 10px;
-    font-weight: 800;
-    font-size: 15px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
+export const CourseContentList = styled.div`
+  display: flex;
+  grid-gap: 20px;
+  width: 100%;
+  padding: 20px;
+  flex-direction: column;
 `;
 
 export const HomeWrapper = styled.div`
@@ -235,12 +229,12 @@ export const Overlay = styled.div`
   display: ${(props) => (props.isPopupVisible ? "block" : "none")};
 `;
 
-
 export const ContentItem = styled.li`
-  //   display: flex;
-  //   justify-content: center;
-  //   align-self: center;
-  width: 60%;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 5px;
+  width: 40%;
   height: 400px;
   display: grid;
   grid-template-columns: 1fr;
@@ -277,27 +271,26 @@ export const ContentItem = styled.li`
 `;
 
 export const CourseLearnListLearn = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  display: flex;
   gap: 6px;
-  // display: flex;
+  flex-direction: column;
 `;
 
 export const CourseLearnList = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  display: flex;
   gap: 20px;
   display: flex;
+  flex-direction: column;
 `;
 
 export const LearnItemStyled = styled.li`
   display: flex;
   align-items: center;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 
   .check-icon {
     margin-right: 5px;
-    color: green; 
+    color: green;
   }
 
   .learn-text {

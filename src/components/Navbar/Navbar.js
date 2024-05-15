@@ -156,7 +156,7 @@ const Navbar = ({ totalItems }) => {
               <DropdownSection>
                 <DropdownLink onClick={handleProfile}>Profile</DropdownLink>
                 <DropdownLink href="">My Learnings</DropdownLink>
-                <DropdownLink href="">Favourite Courses</DropdownLink>
+                <DropdownLink href="">My Courses</DropdownLink>
               </DropdownSection>
               <DropdownSection>
                 {userData.role === "Instructor" && (

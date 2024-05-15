@@ -38,6 +38,7 @@ import Navbar from "../components/Navbar/Navbar";
 import { FaLock } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Typography } from "@mui/material";
 
 const SingleCoursePage = () => {
   const { courseId } = useParams();
@@ -304,11 +305,20 @@ const SingleCoursePage = () => {
             <CourseContentList>
               <CourseLearnList>
                 {content &&
-                  content.map((contentItem, idx) => (
+                  content?.map((contentItem, idx) => (
                     <ContentItem key={idx}>
-                      <div>
-                        Lecture
-                      </div>
+                      <Typography
+                        style={{
+                          fontSize: "1rem",
+                          border: "1px solid black",
+                          background: "orange",
+                          display: "flex",
+                          justifyContent: "center",
+                          borderRadius: "1rem",
+                        }}
+                      >
+                        <strong>Lecture {idx + 1}: </strong>{" "}
+                      </Typography>
                       <div className="content-title">{contentItem.title}</div>
                       <div className="content-description">
                         {contentItem.description}
