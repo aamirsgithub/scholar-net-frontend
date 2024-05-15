@@ -18,6 +18,8 @@ import SuccessPage from "../components/Checkout/Success";
 import CancelPage from "../components/Checkout/Cancel";
 import StudentProfile from "../pages/StudentProfile";
 import StudentSettings from "../pages/StudentSettings";
+import MyCoursesPage from "../pages/MyCourses";
+import InstructorCourses from "../pages/InstructorCourses";
 
 const Router = () => {
   return (
@@ -39,9 +41,11 @@ const Router = () => {
 
         <Route path="/student-profile" element={<ProtectedRoute><StudentProfile /></ProtectedRoute>} />
         <Route path="/student-settings" element={<ProtectedRoute><StudentSettings /></ProtectedRoute>} />
+        <Route path="/my-courses" element={<ProtectedRoute><MyCoursesPage /></ProtectedRoute>} />
 
         <Route path="/instructor-profile" element={<ProtectedRoute><InstructorProfile /></ProtectedRoute>} />
         <Route path="/instructor-settings" element={<ProtectedRoute><InstructorSettings /></ProtectedRoute>} />
+        <Route path="/instructor-courses" element={<ProtectedRoute><InstructorCourses /></ProtectedRoute>} />
 
         <Route path="/student-meeting" element={<ProtectedRoute><StudentMeeting /></ProtectedRoute>} />
         <Route path="/instructor-meeting" element={<ProtectedRoute><StartMeeting /></ProtectedRoute>} />

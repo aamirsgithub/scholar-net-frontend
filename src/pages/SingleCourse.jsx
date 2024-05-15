@@ -34,6 +34,7 @@ import {
   LockedVideo,
   CoursePurchasedText,
 } from "./style";
+import DefaultImg from "../assets/images/img100.jpg";
 import Navbar from "../components/Navbar/Navbar";
 import { FaLock } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
@@ -274,9 +275,14 @@ const SingleCoursePage = () => {
               )
             )}
           </CourseDetails>
+
           <CourseImage>
             <img
-              src={`http://localhost:5000/${image.replace(/\\/g, "/")}`}
+              src={
+                image
+                  ? `http://localhost:5000/${image.replace(/\\/g, "/")}`
+                  : DefaultImg
+              }
               alt={course_name}
             />
           </CourseImage>

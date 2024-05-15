@@ -156,7 +156,17 @@ const Navbar = ({ totalItems }) => {
               <DropdownSection>
                 <DropdownLink onClick={handleProfile}>Profile</DropdownLink>
                 <DropdownLink href="">My Learnings</DropdownLink>
-                <DropdownLink href="">My Courses</DropdownLink>
+
+                {userData.role === "Instructor" && (
+                  <DropdownLink onClick={() => navigate("/instructor-courses")}>
+                    My Courses
+                  </DropdownLink>
+                )}
+                {userData.role === "Student" && (
+                  <DropdownLink onClick={() => navigate("/my-courses")}>
+                    My Courses
+                  </DropdownLink>
+                )}
               </DropdownSection>
               <DropdownSection>
                 {userData.role === "Instructor" && (

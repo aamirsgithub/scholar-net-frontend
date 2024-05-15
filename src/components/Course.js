@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import StarRating from "../components/StarRating";
 import { useNavigate } from "react-router-dom";
+import DefaultImg from "../assets/images/img100.jpg";
 
 const Course = ({
   _id,
@@ -15,6 +16,7 @@ const Course = ({
   category,
   addToCart,
   CompleteCourse,
+  myCourse = false,
 }) => {
   const navigate = useNavigate();
 
@@ -25,11 +27,34 @@ const Course = ({
       },
     });
   };
+
+  const imageUrl = image
+    ? myCourse
+      ? image
+      : `http://localhost:5000/${image.replace(/\\/g, "/")}`
+    : DefaultImg;
+
   return (
     <CourseCard>
       <div className="item-img">
-        <img
+        {/* <img
           src={`http://localhost:5000/${image.replace(/\\/g, "/")}`}
+          alt={course_name}
+          style={{ width: "100%", height: "200px" }}
+        /> */}
+
+        {/* <img
+          src={
+            image
+              ? `http://localhost:5000/${image.replace(/\\/g, "/")}`
+              : DefaultImg
+          }
+          alt={course_name}
+          style={{ width: "100%", height: "200px" }}
+        /> */}
+
+        <img
+          src={imageUrl}
           alt={course_name}
           style={{ width: "100%", height: "200px" }}
         />
