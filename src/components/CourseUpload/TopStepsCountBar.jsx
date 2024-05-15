@@ -17,7 +17,7 @@ const TopStepsCountBar = ({ step, totalSteps }) => {
           Step {step} of {totalSteps}
         </StepText>
       </LogoAndText>
-      <ExitLink href="#">Exit</ExitLink>
+      <ExitLink href="/">Exit</ExitLink>
     </TopBarContainer>
   );
 };

@@ -4,10 +4,14 @@ import { Link } from "react-router-dom";
 export const SingleCourseWrapper = styled.div`
   background: var(--clr-dark);
   color: var(--clr-white);
+  min-height: 100vh;
+  width: 100%;
+  padding: 4rem 0rem 0rem 0rem;
 `;
 
 export const CourseIntro = styled.div`
-  padding: 40px 16px;
+  padding: 40px 40px;
+  width: 100%;
   max-width: 90%;
   display: grid;
 
@@ -22,7 +26,7 @@ export const CourseIntro = styled.div`
 `;
 
 export const CourseImage = styled.div`
-  width: 90%;
+  width: 580px;
   margin-top: 25px;
 `;
 
@@ -30,6 +34,7 @@ export const CourseFoot = styled.div``;
 
 export const CourseDetails = styled.div`
   padding-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 export const CourseCategory = styled.div`
@@ -39,7 +44,9 @@ export const CourseCategory = styled.div`
   font-weight: bold;
   font-size: 12px;
   display: inline-block;
-  padding: 0 8px;
+  padding: 5px 10px;
+  border-radius: 50px;
+  font-size: 14px;
   border-radius: 6px;
 `;
 
@@ -95,7 +102,7 @@ export const CoursePrice = styled.div`
     font-weight: bold;
   }
   .old-price {
-    font-size: 26px;
+    font-size: 18px;
     font-weight: semi-bold;
     color: #eceb98;
     text-decoration: line-through;
@@ -143,32 +150,44 @@ export const AddToCartButton = styled.button`
   }
 `;
 
+// export const CourseFull = styled.div`
+//   background-color: white;
+//   color: black;
+//   padding: 40px 16px;
+// `;
+
+// export const CourseLearn = styled.div`
+//   max-width: 992px;
+//   margin: auto;
+//   border: 1px solid rgba(0, 0, 0, 0.2);
+//   padding: 12px 28px 22px;
+// `;
+
+// export const CourseScTitle = styled.div`
+//   font-size: 22px;
+//   font-weight: bold;
+//   margin: 12px 0;
+// `;
+
 export const CourseFull = styled.div`
-  background-color: white;
+  background-color: #fff;
   color: black;
-  padding: 40px 16px;
+  padding: 40px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
 export const CourseLearn = styled.div`
-  max-width: 992px;
-  margin: auto;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 12px 28px 22px;
+  margin-bottom: 40px;
+  //  border: 1px solid rgba(0, 0, 0, 0.2);
 `;
 
-export const CourseScTitle = styled.div`
-  font-size: 22px;
+export const CourseScTitle = styled.h2`
+  font-size: 2.5rem;
   font-weight: bold;
-  margin: 12px 0;
+  color: black;
+  margin-bottom: 20px;
 `;
-
-// export const CourseLearnList = styled.ul`
-//   display: grid;
-//   grid-template-columns: repeat(1, 1fr);
-//   @media screen and (min-width: 992px) {
-//     grid-template-columns: repeat(2, 1fr);
-//   }
-// `;
 
 export const LearnItem = styled.li`
   margin: 5px 0;
@@ -177,11 +196,13 @@ export const LearnItem = styled.li`
 `;
 
 export const CourseContentSection = styled.div`
-  max-width: 992px;
+  width: 100%;
   margin: auto;
   margin-top: 30px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 12px 28px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  // padding: 12px 28px 22px;
 `;
 
 export const CourseContentList = styled.ul`
@@ -192,6 +213,9 @@ export const CourseContentList = styled.ul`
     margin-bottom: 10px;
     font-weight: 800;
     font-size: 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
   }
 `;
 
@@ -207,7 +231,7 @@ export const Overlay = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 50; // Ensure this is below your popup but above other content
+  z-index: 50;
   display: ${(props) => (props.isPopupVisible ? "block" : "none")};
 `;
 
@@ -252,26 +276,28 @@ export const ContentItem = styled.li`
   }
 `;
 
+export const CourseLearnListLearn = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 6px;
+  // display: flex;
+`;
+
 export const CourseLearnList = styled.ul`
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 20px;
-  //   @media screen and (min-width: 768px) {
-  //     grid-template-columns: repeat(2, 1fr);
-  //   }
-  //   @media screen and (min-width: 1024px) {
-  //     grid-template-columns: repeat(3, 1fr);
-  //   }
+  display: flex;
 `;
 
 export const LearnItemStyled = styled.li`
   display: flex;
   align-items: center;
-  margin-bottom: 10px; // Adjust the bottom margin to control space between items
+  margin-bottom: 10px; 
 
   .check-icon {
-    margin-right: 5px; // Space between the check icon and the text
-    color: green; // Example color for the check icon, adjust as needed
+    margin-right: 5px;
+    color: green; 
   }
 
   .learn-text {
@@ -302,7 +328,7 @@ export const PhotoGalleryContainer = styled("div")({
 export const GalleryImage = styled("img")({
   width: "100%",
   height: "100%",
-  objectFit: "cover", 
+  objectFit: "cover",
 });
 
 export const GalleryButton = styled("button")({

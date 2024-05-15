@@ -7,22 +7,22 @@ export const StepCardData = [
     box: 1,
     id: 1,
     icon: OndemandVideoRoundedIcon,
-    Type: "Video Course",
-    desc: "This is a course description for a card in Scholar NET.",
+    Type: "Video Courses",
+    desc: "Scholar NET. You can upload your video lectures here.",
   },
   {
     box: 2,
     id: 2,
     icon: BookRoundedIcon,
     Type: "Practice Test",
-    desc: "This is a test description for a card in Scholar NET.",
+    desc: "Coming soon. It would be available in August 2024.",
   },
   {
     box: 3,
     id: 3,
     icon: AutoStoriesRoundedIcon,
     Type: "Notes",
-    desc: "This is a Notes description for a card in Scholar NET.",
+    desc: "Coming soon. It would be available in August 2024.",
   },
   
 ];

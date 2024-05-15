@@ -128,7 +128,7 @@ const CartPage = () => {
   return (
     <>
       <Navbar totalItems={totalItems} />
-      <CartWrapper>
+      <CartWrapper style={{marginTop: "30px"}}>
         <div className="container">
           <div className="cart-pg-title">
             <h3>Shopping Cart</h3>

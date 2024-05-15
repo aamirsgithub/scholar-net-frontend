@@ -25,6 +25,7 @@ import {
   CourseLearn,
   CourseScTitle,
   CourseLearnList,
+  CourseLearnListLearn,
   LearnItem,
   CourseContentSection,
   CourseContentList,
@@ -285,14 +286,14 @@ const SingleCoursePage = () => {
             <CourseScTitle>What you'll learn</CourseScTitle>
             <CourseLearnList>
               {learningOutcomes.length > 0 ? (
-                <CourseLearnList>
+                <CourseLearnListLearn>
                   {learningOutcomes.map((outcome, index) => (
                     <LearnItemStyled key={index}>
                       <BiCheck className="check-icon" />
                       <span className="learn-text">{outcome}</span>
                     </LearnItemStyled>
                   ))}
-                </CourseLearnList>
+                </CourseLearnListLearn>
               ) : (
                 <div>No learning outcomes provided.</div>
               )}
@@ -305,6 +306,9 @@ const SingleCoursePage = () => {
                 {content &&
                   content.map((contentItem, idx) => (
                     <ContentItem key={idx}>
+                      <div>
+                        Lecture
+                      </div>
                       <div className="content-title">{contentItem.title}</div>
                       <div className="content-description">
                         {contentItem.description}

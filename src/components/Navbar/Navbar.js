@@ -21,10 +21,11 @@ import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../authentication/Auth";
 
-const Navbar = ({ totalItems, categoriesRef }) => {
+const Navbar = ({ totalItems }) => {
   const navigate = useNavigate();
   const { logout } = useAuth();
   const [userData, setUserData] = useState(null);
+  const [profilePicture, setProfilePicture] = useState(null);
   const [totalCartItems, setTotalCartItems] = useState(0);
 
   const user = JSON.parse(localStorage.getItem("userData"));
@@ -70,12 +71,13 @@ const Navbar = ({ totalItems, categoriesRef }) => {
 
     updateCartItemsCount();
     window.addEventListener("cartUpdated", updateCartItemsCount);
+
     const userDataFromStorage = localStorage.getItem("userData");
+
     if (userDataFromStorage) {
       setUserData(JSON.parse(userDataFromStorage));
     }
 
-    // Cleanup: remove event listener on component unmount
     return () =>
       window.removeEventListener("cartUpdated", updateCartItemsCount);
   }, []);
@@ -86,15 +88,17 @@ const Navbar = ({ totalItems, categoriesRef }) => {
 
   useEffect(() => {
     const userDataFromStorage = localStorage.getItem("userData");
-    if (userDataFromStorage) {
+    const profilePicture = localStorage.getItem("profilePicture");
+    if (userDataFromStorage && profilePicture) {
       setUserData(JSON.parse(userDataFromStorage));
+      setProfilePicture(profilePicture);
     }
   }, []);
 
-  const handleCategoriesClick = (e) => {
-    e.preventDefault();
-    categoriesRef.current.scrollIntoView({ behavior: "smooth" });
-  };
+  // const handleCategoriesClick = (e) => {
+  //   e.preventDefault();
+  //   categoriesRef.current.scrollIntoView({ behavior: "smooth" });
+  // };
 
   return (
     <NavbarContainer>
@@ -139,7 +143,10 @@ const Navbar = ({ totalItems, categoriesRef }) => {
         </Link>
 
         <ProfileAvatar>
-          <ProfileImage src={ProfileImgDummy} alt="Profile Avatar" />
+          <ProfileImage
+            src={profilePicture || ProfileImgDummy}
+            alt="Profile Avatar"
+          />
           {userData && (
             <DropdownMenu>
               <DropdownSection>
@@ -152,26 +159,13 @@ const Navbar = ({ totalItems, categoriesRef }) => {
                 <DropdownLink href="">Favourite Courses</DropdownLink>
               </DropdownSection>
               <DropdownSection>
-                {/* <DropdownLink href="">
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      gap: "3px",
-                    }}
-                  >
-                    <div>{userData.role}'s </div>
-                    <div> Dashboard</div>
-                  </div>
-                </DropdownLink> */}
-
                 {userData.role === "Instructor" && (
                   <DropdownLink href="/upload-course">Courses</DropdownLink>
                 )}
                 {userData.role === "Admin" && (
                   <DropdownLink href="">Manage Courses</DropdownLink>
                 )}
-                <DropdownLink href="">Notifications</DropdownLink>
+                {/* <DropdownLink href="">Notifications</DropdownLink> */}
                 <DropdownSection>
                   <DropdownLink onClick={handleSettings}>
                     Go to Settings

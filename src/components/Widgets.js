@@ -50,36 +50,12 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
     ? `http://localhost:5000/${image.replace(/\\/g, "/")}`
     : Profile1;
 
-  // console.log("instructor profile data", profileData)
-  // console.log("meeting join url", meetingStartUrl)
-
-  //fetching meeting details from backend:
-  // const fetchMeetingDetails = async () => {
-  //   const response = await fetch(
-  //     "http://localhost:5000/api/zoom/meeting-details",
-  //     {
-  //       method: "POST",
-  //       credentials: "include",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ instructorId: InstructorId }),
-  //     }
-  //   );
-
-  //   const data = await response.json();
-  //   // console.log("Meeting data:", data);
-  //   if (response.ok) {
-  //     toast.success("Meeting details fetched successfully!");
-  //     setMeetingData({
-  //       startUrl: data.startUrl,
-  //       joinUrl: data.joinUrl,
-  //       password: data.password,
-  //     });
-  //   } else {
-  //     toast.error(data.message || "Failed to fetch meeting details.");
-  //   }
-  // };
+  useEffect(() => {
+    if (image) {
+      const imageUrl = `http://localhost:5000/${image.replace(/\\/g, "/")}`;
+      localStorage.setItem("profilePicture", imageUrl);
+    }
+  }, [image]);
 
   const fetchMeetingDetails = async () => {
     setLoading(true);
@@ -123,12 +99,15 @@ export const InstructorProfileWidget = ({ profileData, InstructorId }) => {
   const CreateMeeting = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/zoom/start-meeting", {
-        method: "POST",
-        credentials: "include",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ InstructorId }),
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/zoom/start-meeting",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ InstructorId }),
+        }
+      );
 
       const data = await response.json();
       if (response.ok) {
@@ -313,6 +292,13 @@ export const StudentProfileWidget = ({ profileData, InstructorId }) => {
   const profileImage = image
     ? `http://localhost:5000/${image.replace(/\\/g, "/")}`
     : Profile1;
+
+  useEffect(() => {
+    if (image) {
+      const imageUrl = `http://localhost:5000/${image.replace(/\\/g, "/")}`;
+      localStorage.setItem("profilePicture", imageUrl);
+    }
+  }, [image]);
 
   const fetchMeetingDetails = async () => {
     setFetching(true);

@@ -1,6 +1,15 @@
 import styled, { css } from "styled-components";
 import { Button, TextField } from "@mui/material";
 
+const StyledInputButton = styled(Button)`
+  background-color: #1976d2;
+  color: white;
+
+  &:hover {
+    background-color: #1565c0;
+  }
+`;
+
 export const OuterDiv = styled.div`
   width: 250px;
   display: flex;
@@ -20,6 +29,8 @@ export const OuterDiv = styled.div`
     css`
       transform: scale(1.05);
     `}
+
+  ${(props) => props.style}
 `;
 
 export const IconBox = styled.div`
@@ -139,7 +150,6 @@ export const ContinueButton = styled.button`
   }
 `;
 
-
 export const PageContainer = styled.div`
   background-color: #f5f5f5;
   min-height: 100vh;
@@ -163,6 +173,7 @@ export const StyledButton = styled(Button)`
   && {
     background-color: #1976d2;
     color: white;
+    padding: 1rem;
     &:hover {
       background-color: #115293;
     }
@@ -190,8 +201,8 @@ export const StyledTextField = styled(TextField)`
 `;
 
 export const ImagePreview = styled.img`
-  width: 150px;
-  height: 150px;
+  width: 250px;
+  height: 250px;
   object-fit: cover;
   margin-top: 10px;
 `;

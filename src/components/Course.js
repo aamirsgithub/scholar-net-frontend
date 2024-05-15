@@ -3,7 +3,6 @@ import styled from "styled-components";
 import StarRating from "../components/StarRating";
 import { useNavigate } from "react-router-dom";
 
-
 const Course = ({
   _id,
   image,
@@ -14,7 +13,7 @@ const Course = ({
   rating_count,
   rating_star,
   category,
-  addToCart, 
+  addToCart,
   CompleteCourse,
 }) => {
   const navigate = useNavigate();
@@ -32,12 +31,13 @@ const Course = ({
         <img
           src={`http://localhost:5000/${image.replace(/\\/g, "/")}`}
           alt={course_name}
+          style={{ width: "100%", height: "200px" }}
         />
       </div>
       <div className="item-body">
         <h5 className="item-name">{course_name}</h5>
         <span className="item-creator">{creator}</span>
-        <div className="item-rating flex">
+        <div className="item-rating">
           <span className="rating-star-val">{rating_star}</span>
           <StarRating rating_star={rating_star} />
           <span className="rating-count">({rating_count})</span>
@@ -47,104 +47,83 @@ const Course = ({
           <span className="item-price-old">${actual_price}</span>
         </div>
       </div>
-      <div className="item-btns flex">
+      <div className="item-btns">
         <button
           onClick={handleSeeDetailsClick}
           className="item-btn see-details-btn"
         >
           See Details
         </button>
-
-        {/* <Link
-          to="/cart"
-          className="item-btn add-to-cart-btn"
-          onClick={() => addToCart(id, image, course_name, creator, discounted_price, category)}
-        >
-          Add to cart
-        </Link> */}
       </div>
     </CourseCard>
   );
 };
 
 const CourseCard = styled.div`
+  cursor: pointer;
   margin-bottom: 20px;
+  border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
   display: flex;
   flex-direction: column;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.02) translateY(-10px); // Modified transform
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 16px 30px;
+    border: 1px solid orange;
+  }
   .item-body {
-    margin: 14px 0;
-    padding: 4px 18px;
+    padding: 16px;
+    text-align: left;
 
     .item-name {
-      font-size: 15px;
-      line-height: 1.4;
-      font-weight: 800;
+      font-size: 18px;
+      font-weight: bold;
     }
     .item-creator {
-      font-size: 12.5px;
-      font-weight: 500;
-      color: rgba(0, 0, 0, 0.6);
-    }
-    .rating-star-val {
-      margin-bottom: 5px;
       font-size: 14px;
-      font-weight: 800;
-      color: #b4690e;
-      margin-right: 6px;
+      color: #666;
     }
-    .rating-count {
-      font-size: 12.5px;
-      margin-left: 3px;
-      font-weight: 500;
-      opacity: 0.8;
+    .item-rating {
+      display: flex;
+      align-items: center;
+      margin-top: 8px;
     }
     .item-price-new {
-      font-weight: 700;
-      font-size: 15px;
+      color: #008000;
+      font-weight: bold;
     }
     .item-price-old {
-      opacity: 0.8;
-      font-weight: 500;
-      text-decoration: line-through;
-      font-size: 15px;
       margin-left: 8px;
+      color: #999;
+      text-decoration: line-through;
     }
   }
 
   .item-btns {
-    justify-self: flex-start;
-    padding: 4px 8px 30px 18px;
-    margin-top: auto;
+    padding: 10px 16px;
+    background-color: #f8f8f8;
+    border-top: 1px solid #eee;
+
     .item-btn {
-      font-size: 15px;
-      display: inline-block;
-      padding: 6px 16px;
-      font-weight: 700;
-      transition: var(--transition);
-      white-space: nowrap;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin-right: 5px;
+      transition: background-color 0.3s ease;
 
-      &.see-details-btn {
-        background-color: transparent;
-        border: 1px solid var(--clr-black);
-        margin-right: 5px;
-
-        &:hover {
-          background-color: rgba(0, 0, 0, 0.9);
-          color: var(--clr-white);
-        }
+      &:hover {
+        background-color: #0056b3;
       }
 
-      &.add-to-cart-btn {
-        background: rgba(0, 0, 0, 0.9);
-        color: var(--clr-white);
-        border: 1px solid rgba(0, 0, 0, 0.9);
-
-        &:hover {
-          background-color: transparent;
-          color: rgba(0, 0, 0, 0.9);
-        }
+      &.see-details-btn {
+        background-color: black;
+        border: 1px solid var(--clr-black);
+        margin-right: 5px;
       }
     }
   }

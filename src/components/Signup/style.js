@@ -8,8 +8,8 @@ export const MainImg = styled.img`
 `;
 
 export const Card = styled.div`
-width: 450px;
-padding: 30px;
+  width: 450px;
+  padding: 30px;
   border-radius: 24px;
   background: #fff;
 
@@ -17,7 +17,6 @@ padding: 30px;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-
 `;
 
 export const SignUpText = styled.div`
@@ -159,7 +158,6 @@ export const ConstraintsText = styled.div`
   white-space: nowrap;
   // width: 180px;
 
-
   width: 230px;
   display: flex;
   justify-content: flex-start;
@@ -281,6 +279,7 @@ export const MainContainer = styled.div`
   border-radius: 12px;
   background: #fefefe;
   position: absolute;
+  flex-direction: column;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -326,13 +325,12 @@ export const InnerContainer = styled.div`
 `;
 
 export const VerificationIcon = styled.div`
- width: 350px
-  // @media (max-width: 815px) {
-  //   font-size: 40px;
-  // }
-  // @media (max-width: 500px) {
-  //   font-size: 30px;
-  // }
+  width: 350px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
 `;
 
 export const VerificationStatus = styled.div`
@@ -387,8 +385,9 @@ export const VerificationButton = styled.button`
 
 export const CloseIconDiv = styled.div`
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 9px;
+  right: 5px;
+  font-size: 30px;
   cursor: pointer;
   &:hover {
   }

@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef , forwardRef } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Tabs from "./Tabs";
 
 const CourseList = () => {
-  // const CourseList = forwardRef((props, ref) => {
-    const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -13,7 +12,6 @@ const CourseList = () => {
           "http://localhost:5000/api/fetch-all-courses",
           {
             method: "GET",
-            // credentials: "include",
           }
         );
         if (!response.ok) {
@@ -29,12 +27,8 @@ const CourseList = () => {
     fetchCourses();
   }, []);
 
-  // console.log("fetched courses from database: ", courses);
-
   return (
-    <CoursesListWrapper
-    //  ref={ref}
-    >
+    <CoursesListWrapper>
       <div className="container">
         <div className="courses-list-top">
           <h2>A broad selection of courses</h2>

@@ -19,7 +19,6 @@ const StepOne = (props) => {
           (item) => item.box === parseInt(key.replace("box", ""))
         );
         if (selectedItem) {
-          // console.log("You Selected: ", selectedItem.Type);
           setcourseType(selectedItem.Type);
           handleCourseUpload();
         }
