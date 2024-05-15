@@ -77,7 +77,7 @@ const SignupCard = () => {
     password: false,
     confirmPassword: false,
   });
-
+  const [nameError, SetNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
@@ -121,18 +121,20 @@ const SignupCard = () => {
       symbol: /[@#$%^&*()_+[\]{}|~]/.test(inputPassword),
     });
 
-    if (isSubmitAttempted && confirmPassword) {
-      if (confirmPassword !== inputPassword) {
+    if (isSubmitAttempted) {
+      const strength = calculatePasswordStrength(inputPassword);
+      if (strength < 4) {
+        setPasswordError(
+          "Password not strong enough. Ensure it meets all criteria for a very strong password."
+        );
+      } else {
+        setPasswordError("");
+      }
+
+      if (confirmPassword && confirmPassword !== inputPassword) {
         setConfirmPasswordError("Passwords do not match.");
       } else {
         setConfirmPasswordError("");
-      }
-    }
-    if (isSubmitAttempted) {
-      if (!inputPassword) {
-        setPasswordError("Password field is empty.");
-      } else {
-        setPasswordError("");
       }
     }
   };
@@ -174,6 +176,23 @@ const SignupCard = () => {
     }
   };
 
+  const handleNameChange = (event) => {
+    const newName = event.target.value;
+    setName(newName);
+    if (isSubmitAttempted) {
+      if (!newName) {
+        setFormErrors((prev) => ({ ...prev, name: "Name field is empty." }));
+      } else if (!/^[a-zA-Z\s,.'-]+$/.test(newName)) {
+        setFormErrors((prev) => ({
+          ...prev,
+          name: "Invalid name. Only alphabets are allowed.",
+        }));
+      } else {
+        setFormErrors((prev) => ({ ...prev, name: false }));
+      }
+    }
+  };
+
   console.log("role", role);
   const handleSignUp = async () => {
     setIsSubmitAttempted(true);
@@ -181,13 +200,27 @@ const SignupCard = () => {
 
     let hasError = false;
 
+    const evaluatedPasswordStrength = calculatePasswordStrength(password);
+
     const newFormErrors = {
       name: !name,
       email: !email || !emailRegex.test(email),
-      password: !password,
-      confirmPassword: !confirmPassword,
+      password: !password || evaluatedPasswordStrength < 4,
+      confirmPassword: !confirmPassword || confirmPassword !== password,
       role: !role,
     };
+
+    if (newFormErrors.password) {
+      setPasswordError("Password is too weak. Ensure it meets all criteria.");
+      hasError = true;
+    }
+
+    if (!name) {
+      setFormErrors("Name field is empty.");
+      hasError = true;
+    } else {
+      setFormErrors("");
+    }
 
     if (!email) {
       setEmailError("Email field is empty.");
@@ -197,6 +230,16 @@ const SignupCard = () => {
       hasError = true;
     } else {
       setEmailError("");
+    }
+
+    if (!role) {
+      setSnackbarMessage("Role must be defined.");
+      setSnackbarVariant("filled");
+      setSnackbarColor("error");
+      setSnackbarOpen(true);
+      hasError = true;
+      setLoading(false);
+      return;
     }
 
     if (!password) {
@@ -216,18 +259,23 @@ const SignupCard = () => {
       setConfirmPasswordError("");
     }
 
-    if (!role) {
-      setSnackbarMessage("Role must be defined.");
-      setSnackbarVariant("filled");
-      setSnackbarColor("error");
-      setSnackbarOpen(true);
-      hasError = true;
+    setFormErrors(newFormErrors);
+    if (Object.values(newFormErrors).some((error) => error) || hasError) {
       setLoading(false);
       return;
     }
 
-    setFormErrors(newFormErrors);
-    if (Object.values(newFormErrors).some((error) => error) || hasError) {
+    if (
+      emailError ||
+      passwordError ||
+      confirmPasswordError ||
+      formErrors.name
+    ) {
+      // Prevent form submission and show an error message.
+      setSnackbarMessage("Please correct the errors before submitting.");
+      setSnackbarVariant("filled");
+      setSnackbarColor("error");
+      setSnackbarOpen(true);
       setLoading(false);
       return;
     }
@@ -316,15 +364,10 @@ const SignupCard = () => {
             <Inputs
               placeholder="Name"
               value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-                if (isSubmitAttempted)
-                  setFormErrors((prev) => ({ ...prev, name: !e.target.value }));
-              }}
+              onChange={handleNameChange}
             />
-            {formErrors.name && isSubmitAttempted && (
-              <InputError>Name field is empty.</InputError>
-            )}
+            {formErrors.name && <InputError>{formErrors.name}</InputError>}
+            {nameError && <InputError>{nameError}</InputError>}
 
             <Inputs
               placeholder="Email"
