@@ -74,16 +74,21 @@ const MyCoursesPage = () => {
           <Typography
             style={{
               color: "orange",
-             padding: "2rem",
+              padding: "2rem",
               fontSize: "3rem",
             }}
           >
-            Students's Courses
+            {userData.displayName}'s Purchased Courses
           </Typography>
         </FlexDiv>
         <CoursesContainer>
           {courses.map((course) => (
-            <Course key={course._id} {...course} myCourse={true} />
+            <Course
+              key={course._id}
+              {...course}
+              CompleteCourse={courses}
+              myCourse={true}
+            />
           ))}
         </CoursesContainer>
       </PageWrapper>

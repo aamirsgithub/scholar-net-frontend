@@ -20,6 +20,7 @@ import ShoppingCartCheckoutRoundedIcon from "@mui/icons-material/ShoppingCartChe
 import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../authentication/Auth";
+import { Typography } from "@mui/material";
 
 const Navbar = ({ totalItems }) => {
   const navigate = useNavigate();
@@ -115,12 +116,24 @@ const Navbar = ({ totalItems }) => {
 
       <FlexDiv>
         {userData && userData.role === "Instructor" && (
-          <Link href="/instructor-profile">Instructor</Link>
+          <FlexDiv style={{ whiteSpace: "nowrap" }}>
+            <Link href="/instructor-profile">
+              {userData.displayName} (Instructor)
+            </Link>
+          </FlexDiv>
         )}
         {userData && userData.role === "Student" && (
-          <Link href="/student-profile">Student</Link>
+          <FlexDiv style={{ whiteSpace: "nowrap" }}>
+            <Link href="/student-profile">
+              {userData.displayName} (Student)
+            </Link>
+          </FlexDiv>
         )}
-        {userData && userData.role === "Admin" && <Link href="/">Admin</Link>}
+        {userData && userData.role === "Admin" && (
+          <FlexDiv style={{ whiteSpace: "nowrap" }}>
+            <Link href="/student-profile">{userData.displayName} (Admin)</Link>
+          </FlexDiv>
+        )}
 
         {!userData && (
           <>
@@ -150,8 +163,7 @@ const Navbar = ({ totalItems }) => {
           {userData && (
             <DropdownMenu>
               <DropdownSection>
-                <div>{userData.displayName}</div>
-                <div>{userData.email}</div>{" "}
+                <Typography>{userData.email}</Typography>
               </DropdownSection>
               <DropdownSection>
                 <DropdownLink onClick={handleProfile}>Profile</DropdownLink>
@@ -170,7 +182,9 @@ const Navbar = ({ totalItems }) => {
               </DropdownSection>
               <DropdownSection>
                 {userData.role === "Instructor" && (
-                  <DropdownLink href="/upload-course">Create Courses</DropdownLink>
+                  <DropdownLink href="/upload-course">
+                    Create Courses
+                  </DropdownLink>
                 )}
                 {userData.role === "Admin" && (
                   <DropdownLink href="">Manage Courses</DropdownLink>
@@ -178,7 +192,7 @@ const Navbar = ({ totalItems }) => {
                 {/* <DropdownLink href="">Notifications</DropdownLink> */}
                 <DropdownSection>
                   <DropdownLink onClick={handleSettings}>
-                    Go to Settings
+                    Settings
                   </DropdownLink>
                   <DropdownLink onClick={handleLogout}>Logout</DropdownLink>
                 </DropdownSection>

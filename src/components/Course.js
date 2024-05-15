@@ -4,15 +4,16 @@ import StarRating from "../components/StarRating";
 import { useNavigate } from "react-router-dom";
 import DefaultImg from "../assets/images/img100.jpg";
 
-const Course = ({
+const CourseCard = ({
   _id,
   image,
   course_name,
-  creator,
   actual_price,
   discounted_price,
   rating_count,
   rating_star,
+  instructor_name,
+  instructor_email,
   category,
   addToCart,
   CompleteCourse,
@@ -37,7 +38,7 @@ const Course = ({
     : DefaultImg;
 
   return (
-    <CourseCard>
+    <MainContainer>
       <div className="item-img">
         {/* <img
           src={`http://localhost:5000/${image.replace(/\\/g, "/")}`}
@@ -66,13 +67,9 @@ const Course = ({
           <h5 className="item-name">{course_name}</h5>
         </div>
 
-        <span className="item-creator">
-          Created By: {CompleteCourse.instructor_name}
-        </span>
+        <span className="item-creator">Created By: {instructor_name}</span>
         <br />
-        <span className="item-creator">
-          Email: {CompleteCourse.instructor_email}
-        </span>
+        <span className="item-creator">Email: {instructor_email}</span>
 
         <div className="item-rating">
           <span className="rating-star-val">{rating_star}</span>
@@ -93,12 +90,13 @@ const Course = ({
           See Details
         </button>
       </div>
-    </CourseCard>
+    </MainContainer>
   );
 };
 
-const CourseCard = styled.div`
+const MainContainer = styled.div`
   width: 320px;
+  height: 435px;
   cursor: pointer;
   margin-bottom: 20px;
   border-radius: 5px;
@@ -168,4 +166,4 @@ const CourseCard = styled.div`
   }
 `;
 
-export default Course;
+export default CourseCard;

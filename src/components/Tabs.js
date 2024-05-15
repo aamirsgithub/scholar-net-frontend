@@ -12,7 +12,6 @@ const Tabs = ({ courses }) => {
     const uniqueCategories = Array.from(new Set(extractedCategories));
 
     setCategories(uniqueCategories);
-    // Set the first category as the default active tab, or a generic category if none exist
     setActiveTab(uniqueCategories[0] || "General");
   }, [courses]);
 
@@ -54,7 +53,8 @@ const TabsWrapper = styled.div`
     margin-top: 16px;
     .tabs-head-item button {
       border: 1px solid rgba(0, 0, 0, 0.7);
-      padding: 10px 13px;
+      min-width: 150px;
+      padding: 8px 12px;
       margin-right: 6px;
       transition: var(--transition);
       font-weight: 500;
@@ -69,6 +69,8 @@ const TabsWrapper = styled.div`
 
     .tabs-body {
       margin-top: 32px;
+      display: flex;
+      justify-content: center;
     }
 
     @media screen and (min-width: 600px) {

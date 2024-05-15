@@ -82,7 +82,7 @@ const UploadCourse = () => {
       setCourseData((prevState) => ({
         ...prevState,
         creator: parsedUserData.displayName,
-      })); // Set creator from userData
+      }));
     }
   }, []);
 
@@ -296,6 +296,7 @@ const UploadCourse = () => {
       );
       if (!response.ok) throw new Error("Network response was not ok");
 
+      //reset input fields after successful course submit
       setCourseData({
         course_name: "",
         description: "",
