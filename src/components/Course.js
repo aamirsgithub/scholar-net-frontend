@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import StarRating from "../components/StarRating";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import DefaultImg from "../assets/images/img100.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,6 +24,7 @@ const CourseCard = ({
   onDelete,
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSeeDetailsClick = () => {
     navigate(`/courses/${_id}`, {
@@ -141,7 +142,7 @@ const CourseCard = ({
           See Details
         </button>
 
-        {isInstructor && (
+        {isInstructor && location.pathname !== '/' && (
           <button onClick={deleteCourse} className="item-btn delete-btn">
             Delete
           </button>
