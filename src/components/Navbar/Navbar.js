@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../authentication/Auth";
 import { Typography } from "@mui/material";
 
-const Navbar = ({ totalItems }) => {
+const Navbar = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
   const [userData, setUserData] = useState(null);
@@ -96,11 +96,6 @@ const Navbar = ({ totalItems }) => {
     }
   }, []);
 
-  // const handleCategoriesClick = (e) => {
-  //   e.preventDefault();
-  //   categoriesRef.current.scrollIntoView({ behavior: "smooth" });
-  // };
-
   return (
     <NavbarContainer>
       <FlexDiv style={{ justifyContent: "flex-start" }}>
@@ -163,11 +158,15 @@ const Navbar = ({ totalItems }) => {
           {userData && (
             <DropdownMenu>
               <DropdownSection>
-                <Typography>{userData.email}</Typography>
+                <FlexDiv style={{ padding: " 0.5rem 0rem 1rem 0rem" }}>
+                  <Typography style={{ color: "orange" }}>
+                    {userData.email}
+                  </Typography>
+                </FlexDiv>
               </DropdownSection>
               <DropdownSection>
                 <DropdownLink onClick={handleProfile}>Profile</DropdownLink>
-                <DropdownLink href="">My Learnings</DropdownLink>
+                {/* <DropdownLink href="">My Learnings</DropdownLink> */}
 
                 {userData.role === "Instructor" && (
                   <DropdownLink onClick={() => navigate("/instructor-courses")}>
@@ -177,6 +176,11 @@ const Navbar = ({ totalItems }) => {
                 {userData.role === "Student" && (
                   <DropdownLink onClick={() => navigate("/my-courses")}>
                     My Courses
+                  </DropdownLink>
+                )}
+                {userData.role === "Student" && (
+                  <DropdownLink onClick={() => navigate("/cart")}>
+                    Got to Cart
                   </DropdownLink>
                 )}
               </DropdownSection>
@@ -191,9 +195,7 @@ const Navbar = ({ totalItems }) => {
                 )}
                 {/* <DropdownLink href="">Notifications</DropdownLink> */}
                 <DropdownSection>
-                  <DropdownLink onClick={handleSettings}>
-                    Settings
-                  </DropdownLink>
+                  <DropdownLink onClick={handleSettings}>Settings</DropdownLink>
                   <DropdownLink onClick={handleLogout}>Logout</DropdownLink>
                 </DropdownSection>
               </DropdownSection>

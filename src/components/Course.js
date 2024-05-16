@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import StarRating from "../components/StarRating";
 import { useNavigate } from "react-router-dom";
 import DefaultImg from "../assets/images/img100.jpg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CourseCard = ({
   _id,
@@ -18,6 +20,8 @@ const CourseCard = ({
   addToCart,
   CompleteCourse,
   myCourse = false,
+
+  onDelete,
 }) => {
   const navigate = useNavigate();
 
@@ -29,7 +33,42 @@ const CourseCard = ({
     });
   };
 
-  console.log("CompleteCourse:", CompleteCourse);
+  const user = JSON.parse(localStorage.getItem("userData"));
+  const isInstructor = user?.role === "Instructor";
+
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const userDataString = localStorage.getItem("userData");
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+      setUserData(userData);
+    }
+  }, []);
+
+  const deleteCourse = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/delete-course/${_id}/${userData._id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete course");
+      }
+
+      toast.success("Course Deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting course:", error);
+      toast.error("Error deleting course");
+    }
+  };
 
   const imageUrl = image
     ? myCourse
@@ -39,6 +78,18 @@ const CourseCard = ({
 
   return (
     <MainContainer>
+      <ToastContainer
+        position="top-right"
+        autoClose={6000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        theme="dark"
+        pauseOnHover
+      />
       <div className="item-img">
         {/* <img
           src={`http://localhost:5000/${image.replace(/\\/g, "/")}`}
@@ -89,6 +140,12 @@ const CourseCard = ({
         >
           See Details
         </button>
+
+        {isInstructor && (
+          <button onClick={deleteCourse} className="item-btn delete-btn">
+            Delete
+          </button>
+        )}
       </div>
     </MainContainer>
   );

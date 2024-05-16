@@ -6,10 +6,12 @@ import styled from "styled-components";
 import isEqual from "lodash/isEqual";
 import { FlexDiv } from "../components/common/Style";
 import { Typography } from "@mui/material";
+import FooterCard from "../components/Footer/FooterCard";
 
 const PageWrapper = styled.div`
   padding: 2rem;
   margin-top: 5rem;
+  min-height: 150vh;
 `;
 
 const CoursesContainer = styled.div`
@@ -91,7 +93,9 @@ const MyCoursesPage = () => {
             />
           ))}
         </CoursesContainer>
+
       </PageWrapper>
+      <FooterCard/>
     </>
   );
 };

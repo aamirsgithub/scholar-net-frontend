@@ -17,10 +17,13 @@ import {
 import { MdClear } from "react-icons/md";
 import CartItemCard from "./CartItemCard";
 import Navbar from "../Navbar/Navbar";
+import { FlexDiv } from "../common/Style";
+import CircularLoader from "../Login/CircularLoader";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const loadedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
@@ -66,6 +69,7 @@ const CartPage = () => {
   }
 
   const handleCheckout = async () => {
+    setIsLoading(true);
     try {
       const lineItems = cartItems.map((item) => ({
         name: item.course_name,
@@ -92,106 +96,100 @@ const CartPage = () => {
       }
     } catch (error) {
       console.error("Checkout failed:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  // const handleCheckout = async () => {
-  //   try {
-  //     // Prepare line items to send to backend
-  //     const lineItems = cartItems.map(item => ({
-  //       name: item.course_name,
-  //       quantity: 1,
-  //       price: item.discounted_price,
-  //     }));
-
-  //     // Fetch checkout session URL from backend
-  //     const response = await fetch("http://localhost:5000/checkout-session", {
-  //       method: "POST",
-  //       credentials: "include",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ items: lineItems }),
-  //     });
-
-  //     const sessionUrl = await response.json();
-  //     console.log(sessionUrl);
-  //     window.location.href = sessionUrl.url;
-
-  //     // const sessionUrl = await response.json();
-  //     // window.location.href = sessionUrl;
-  //   } catch (error) {
-  //     console.error("Checkout failed:", error);
-  //   }
-  // };
-
   return (
     <>
-      <Navbar totalItems={totalItems} />
-      <CartWrapper style={{marginTop: "30px"}}>
-        <div className="container">
-          <div className="cart-pg-title">
-            <h3>Shopping Cart</h3>
-          </div>
-          <div className="cart-grid grid">
-            {/* card grid left */}
-            <div className="cart-grid-left">
-              <div className="flex flex-wrap flex-between">
-                <div className="cart-count-info">
-                  <span className="fw-7 fs-18">{totalItems}</span> Course in
-                  Cart
+      <Navbar />
+      <CartWrapper style={{ marginTop: "100px" }}>
+        <FlexDiv
+          className="container"
+          style={{ flexDirection: "column", width: "100%" }}
+        >
+          <div>
+            <div className="cart-pg-title">
+              <h3>Shopping Cart</h3>
+            </div>
+            <div className="cart-grid grid">
+              {/* card grid left */}
+              <div className="cart-grid-left">
+                <div className="flex flex-wrap flex-between">
+                  <div className="cart-count-info">
+                    <span className="fw-7 fs-18">{totalItems}</span> Course in
+                    Cart
+                  </div>
+                  <button
+                    type="button"
+                    className="cart-clear-btn flex fs-15 fw-6 text"
+                    onClick={() => clearCart()}
+                  >
+                    <MdClear className="text-pink" />
+                    <span className="d-inline-block text-pink">Clear All</span>
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  className="cart-clear-btn flex fs-15 fw-6 text"
-                  onClick={() => clearCart()}
-                >
-                  <MdClear className="text-pink" />
-                  <span className="d-inline-block text-pink">Clear All</span>
-                </button>
-              </div>
 
-              <div className="cart-items-list grid">
-                {cartItems.map((cartItem) => (
-                  <CartItemCard
-                    key={cartItem.courseID}
-                    cartItem={cartItem}
-                    removeFromCart={removeFromCart}
-                  />
-                ))}
-              </div>
-            </div>
-            {/* end of grid left */}
-            {/* cart grid right */}
-            <div className="cart-grid-right">
-              <div className="cart-total">
-                <span className="d-block fs-18 fw-6">Total:</span>
-                <div className="cart-total-value fw-8">
-                  ${totalAmount.toFixed(2)}
+                <div className="cart-items-list grid">
+                  {cartItems.map((cartItem) => (
+                    <CartItemCard
+                      key={cartItem.courseID}
+                      cartItem={cartItem}
+                      removeFromCart={removeFromCart}
+                    />
+                  ))}
                 </div>
-                <button
-                  type="button"
-                  className="checkout-btn bg-purple text-white fw-6"
-                  onClick={handleCheckout}
-                >
-                  Checkout
-                </button>
               </div>
+              {/* end of grid left */}
+              {/* cart grid right */}
+              <div className="cart-grid-right">
+                <div className="cart-total">
+                  <span className="d-block fs-18 fw-6">Total:</span>
+                  <div className="cart-total-value fw-8">
+                    ${totalAmount.toFixed(2)}
+                  </div>
+
+                  {isLoading ? (
+                    <button
+                      type="button"
+                      className="checkout-btn bg-purple text-white fw-6"
+                      onClick={handleCheckout}
+                    >
+                      <CircularLoader size={20} color="black" />
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="checkout-btn bg-purple text-white fw-6"
+                      onClick={handleCheckout}
+                    >
+                      Checkout
+                    </button>
+                  )}
+                </div>
+              </div>
+              {/* end of cart grid right */}
             </div>
-            {/* end of cart grid right */}
           </div>
-        </div>
+        </FlexDiv>
       </CartWrapper>
     </>
   );
 };
 
 const NotFoundWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
   padding: 30px 0;
   font-weight: 600;
 `;
 
 const CartWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-left: 150px;
   padding: 30px 0;
   .card-pg-title {
     padding: 20px 0 6px 0;
@@ -199,6 +197,8 @@ const CartWrapper = styled.div`
   .cart-grid {
     row-gap: 40px;
     .cart-grid-left {
+      width: 600px;
+      margin-right: 150px;
       margin-bottom: 30px;
     }
 
@@ -216,7 +216,10 @@ const CartWrapper = styled.div`
       font-size: 34px;
     }
     .checkout-btn {
-      padding: 14px 28px;
+    
+      min-width: 120px;
+      height: 50px;
+      // padding: 14px 28px;
       letter-spacing: 1px;
       margin-top: 12px;
       transition: var(--transition);

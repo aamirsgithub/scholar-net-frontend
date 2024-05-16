@@ -88,6 +88,7 @@ export const DropdownMenu = styled.div`
   border-radius: 5px;
   padding: 10px;
   z-index: 1000;
+  width: 190px;
 
   ${ProfileAvatar}:hover &, ${ProfileAvatar}:focus-within & {
     display: block;

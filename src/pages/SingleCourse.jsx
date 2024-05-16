@@ -200,13 +200,13 @@ const SingleCoursePage = () => {
                   {rating_star}
                 </span>
                 <StarRating rating_star={rating_star} />
-                <span className="rating-count fw-5 fs-14">
+                {/* <span className="rating-count fw-5 fs-14">
                   ({rating_count})
-                </span>
-                <d />
+                </span> */}
+                {/* <d />
                 <span className="students-count fs-14">
                   {students} students
-                </span>
+                </span> */}
               </CourseRating>
               <CourseInfo>
                 <li>

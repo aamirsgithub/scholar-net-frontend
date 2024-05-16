@@ -6,10 +6,12 @@ import styled from "styled-components";
 import isEqual from "lodash/isEqual";
 import { Typography } from "@mui/material";
 import { FlexDiv } from "../components/common/Style";
+import FooterCard from "../components/Footer/FooterCard";
 
 const PageWrapper = styled.div`
   padding: 2rem;
   margin-top: 5rem;
+  min-height: 150vh;
 `;
 
 const CoursesContainer = styled.div`
@@ -66,6 +68,10 @@ const InstructorCourses = () => {
 
   if (!courses.length) return <div>No courses.</div>;
 
+
+  
+
+
   return (
     <>
       <Navbar />
@@ -88,10 +94,12 @@ const InstructorCourses = () => {
               {...course}
               CompleteCourse={courses}
               myCourse={true}
+              // onDelete={deleteCourse}
             />
           ))}
         </CoursesContainer>
       </PageWrapper>
+      <FooterCard/>
     </>
   );
 };

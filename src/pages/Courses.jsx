@@ -4,7 +4,6 @@ import styled from "styled-components";
 import Course from "../components/Course";
 
 const fetchCourses = async () => {
-  // Implement fetching logic here, e.g., fetching from an API
   const response = await fetch("YOUR_API_ENDPOINT");
   const data = await response.json();
   return data;
@@ -16,7 +15,6 @@ const CoursesPage = () => {
 
   useEffect(() => {
     fetchCourses().then((data) => {
-      // Assuming the API returns an array of courses
       setCourses(data);
     });
   }, []);
