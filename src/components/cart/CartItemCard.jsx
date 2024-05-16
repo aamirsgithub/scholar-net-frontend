@@ -14,7 +14,8 @@ const CartItemCard = ({ cartItem, removeFromCart }) => {
       <div className="cart-item-info">
         <p className="fw-7 fs-15">{cartItem.course_name}</p>
         <span className="cart-item-creator fs-13 opacity-09">
-          By {cartItem.creator}
+          {/* By {cartItem.creator} */}
+          Best Seller
         </span>
         <div className="fw-7 text-purple">${cartItem.discounted_price}</div>
         <div className="cart-item-category">{cartItem.category}</div>

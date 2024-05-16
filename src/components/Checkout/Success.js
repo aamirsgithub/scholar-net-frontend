@@ -18,6 +18,7 @@ const SuccessPage = () => {
       );
       const data = await response.json();
       console.log("payment success",data);
+      localStorage.setItem("cartItems", JSON.stringify([]));
     };
 
     if (sessionId) {
