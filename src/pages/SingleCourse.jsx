@@ -40,6 +40,7 @@ import { FaLock } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Typography } from "@mui/material";
+import StarRatingStatic from "../components/StarRatingStatic";
 
 const SingleCoursePage = () => {
   const { courseId } = useParams();
@@ -196,10 +197,11 @@ const SingleCoursePage = () => {
             <CourseBody>
               <p className="course-para fs-18">{description}</p>
               <CourseRating>
+  
+                <StarRatingStatic rating_star={rating_star} />
                 <span className="rating-star-val fw-8 fs-16">
                   {rating_star}
                 </span>
-                <StarRating rating_star={rating_star} />
                 {/* <span className="rating-count fw-5 fs-14">
                   ({rating_count})
                 </span> */}
