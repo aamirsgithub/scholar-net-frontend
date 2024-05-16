@@ -1,38 +1,3 @@
-// import React, { useState } from "react";
-// import Modal from "react-modal";
-// import StarRating from "./StarRating";
-
-// Modal.setAppElement("#root");
-
-// const RatingModal = ({ isOpen, onRequestClose, onSubmit }) => {
-//   const [rating, setRating] = useState(0);
-
-//   const handleRatingChange = (newRating) => {
-//     setRating(newRating);
-//     // onUpdateRating(newRating);
-//   };
-
-//   const handleSubmit = () => {
-//     onSubmit(rating);
-//     setRating(0);
-//     onRequestClose();
-//   };
-
-//   return (
-//     <Modal
-//       isOpen={isOpen}
-//       onRequestClose={onRequestClose}
-//       contentLabel="Rating Modal"
-//     >
-//       <h2>Rate This Course</h2>
-//       <StarRating rating_star={rating} onChange={handleRatingChange} />
-//       <button onClick={handleSubmit}>Submit Rating</button>
-//     </Modal>
-//   );
-// };
-
-// export default RatingModal;
-
 import React, { useState } from "react";
 import Modal from "react-modal";
 import StarRating from "./StarRating";

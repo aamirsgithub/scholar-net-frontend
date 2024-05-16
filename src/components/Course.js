@@ -161,7 +161,7 @@ const CourseCard = ({
         <br />
         <span className="item-creator">Email: {instructor_email}</span>
 
-        <div className="item-rating" >
+        <div className="item-rating">
           {courseRating !== null && courseRating !== undefined ? (
             <>
               <StarRatingStatic

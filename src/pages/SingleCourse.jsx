@@ -97,8 +97,6 @@ const SingleCoursePage = () => {
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
-        // console.log("Fetching data for courseId:", courseId);
-
         const response = await fetch(
           `http://localhost:5000/api/fetch-single-course/${courseId}`,
           {
@@ -116,7 +114,6 @@ const SingleCoursePage = () => {
 
         const data = await response.json();
         setCourseData(data);
-        // console.log("Course data through API:", data);
 
         if (data && data.what_you_will_learn) {
           const outcomes = data.what_you_will_learn
@@ -137,8 +134,6 @@ const SingleCoursePage = () => {
     return <div>Loading...</div>;
   }
 
-  // console.log("Fetching data of course:", courseData);
-
   const {
     _id,
     category,
@@ -153,7 +148,7 @@ const SingleCoursePage = () => {
     language,
     actual_price,
     discounted_price,
-    what_you_will_learn,
+    // what_you_will_learn,
     content,
   } = courseData;
 
@@ -233,6 +228,15 @@ const SingleCoursePage = () => {
                 </li>
                 <li>
                   <TbWorld />
+                  {/* <FlexDiv style={{flexDirection: "row"}}>
+                    <div className="course-info-txt">
+                      Last updated:
+                      <Typography style={{ color: "orange" }}>
+                        {new Date(updatedAt).toLocaleDateString()}
+                      </Typography>
+                    </div>
+                  </FlexDiv> */}
+
                   <span className="course-info-txt">
                     Last updated {new Date(updatedAt).toLocaleDateString()}
                   </span>
