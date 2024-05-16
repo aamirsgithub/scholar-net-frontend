@@ -3,8 +3,6 @@ import styled from "styled-components";
 import StarRating from "../components/StarRating";
 import { useNavigate, useLocation } from "react-router-dom";
 import DefaultImg from "../assets/images/img100.jpg";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const CourseCard = ({
   _id,
@@ -95,7 +93,7 @@ const CourseCard = ({
         <div className="item-rating">
           <span className="rating-star-val">{rating_star}</span>
           <StarRating rating_star={rating_star} />
-          <span className="rating-count">({rating_count})</span>
+          {/* <span className="rating-count">({rating_count})</span> */}
         </div>
 
         <div className="item-price">
