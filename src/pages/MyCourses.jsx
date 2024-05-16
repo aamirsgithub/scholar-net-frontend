@@ -66,7 +66,29 @@ const MyCoursesPage = () => {
     fetchPurchasedCourses();
   }, [userData]); // Use the custom hook here
 
-  if (!courses.length) return <div>No courses purchased yet.</div>;
+  if (!courses.length)
+    return (
+      <>
+        <Navbar />
+        <PageWrapper>
+          <CoursesContainer>
+            <FlexDiv>
+              {" "}
+              <Typography
+                style={{
+                  color: "orange",
+                  padding: "2rem",
+                  fontSize: "3rem",
+                }}
+              >
+                Dear {userData.displayName}! You have not purchased any course yet.
+              </Typography>
+            </FlexDiv>
+          </CoursesContainer>
+        </PageWrapper>
+        <FooterCard />
+      </>
+    );
 
   return (
     <>
@@ -93,9 +115,8 @@ const MyCoursesPage = () => {
             />
           ))}
         </CoursesContainer>
-
       </PageWrapper>
-      <FooterCard/>
+      <FooterCard />
     </>
   );
 };

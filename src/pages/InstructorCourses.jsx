@@ -68,7 +68,30 @@ const InstructorCourses = () => {
     fetchInstructorCourses();
   }, [userData]);
 
-  if (!courses.length) return <div>No courses.</div>;
+  if (!courses.length)
+    return (
+      <>
+        <Navbar />
+        <PageWrapper>
+          <CoursesContainer>
+            <FlexDiv>
+              {" "}
+              <Typography
+                style={{
+                  color: "orange",
+                  padding: "2rem",
+                  fontSize: "3rem",
+                }}
+              >
+                Dear {userData.displayName}! You have not uploaded any course
+                yet.
+              </Typography>
+            </FlexDiv>
+          </CoursesContainer>
+        </PageWrapper>
+        <FooterCard />
+      </>
+    );
 
   const deleteCourse = async (courseId) => {
     try {
