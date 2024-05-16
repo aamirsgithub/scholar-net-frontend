@@ -41,6 +41,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Typography } from "@mui/material";
 import StarRatingStatic from "../components/StarRatingStatic";
+import { FlexDiv } from "../components/common/Style";
 
 const SingleCoursePage = () => {
   const { courseId } = useParams();
@@ -197,18 +198,28 @@ const SingleCoursePage = () => {
             <CourseBody>
               <p className="course-para fs-18">{description}</p>
               <CourseRating>
-  
-                <StarRatingStatic rating_star={rating_star} />
-                <span className="rating-star-val fw-8 fs-16">
-                  {rating_star}
-                </span>
-                {/* <span className="rating-count fw-5 fs-14">
-                  ({rating_count})
-                </span> */}
-                {/* <d />
-                <span className="students-count fs-14">
-                  {students} students
-                </span> */}
+                <FlexDiv>
+                  {rating_star !== null && rating_star !== undefined ? (
+                    <>
+                      <FlexDiv style={{ gap: "2px" }}>
+                        <StarRatingStatic
+                          rating_star={parseFloat(rating_star.toFixed(1))}
+                        />
+                        <FlexDiv
+                          style={{ marginTop: "10px" }}
+                          className="rating-star-val fw-8 fs-16"
+                        >
+                          {rating_star.toFixed(1)}
+                        </FlexDiv>
+                      </FlexDiv>
+                    </>
+                  ) : (
+                    <span>Loading rating...</span>
+                  )}
+                  <span className="rating-count">
+                    ({rating_count} Students)
+                  </span>
+                </FlexDiv>
               </CourseRating>
               <CourseInfo>
                 <li>
