@@ -25,6 +25,9 @@ const CourseCard = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [userData, setUserData] = useState(null);
+  const [courses, setCourses] = useState([]);
+  const [isDeleted, setIsDeleted] = useState(false);
 
   const handleSeeDetailsClick = () => {
     navigate(`/courses/${_id}`, {
@@ -37,8 +40,6 @@ const CourseCard = ({
   const user = JSON.parse(localStorage.getItem("userData"));
   const isInstructor = user?.role === "Instructor";
 
-  const [userData, setUserData] = useState(null);
-
   useEffect(() => {
     const userDataString = localStorage.getItem("userData");
     if (userDataString) {
@@ -47,28 +48,8 @@ const CourseCard = ({
     }
   }, []);
 
-  const deleteCourse = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/delete-course/${_id}/${userData._id}`,
-        {
-          method: "DELETE",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to delete course");
-      }
-
-      toast.success("Course Deleted successfully!");
-    } catch (error) {
-      console.error("Error deleting course:", error);
-      toast.error("Error deleting course");
-    }
+  const deleteCourse = () => {
+    onDelete(_id);
   };
 
   const imageUrl = image
@@ -79,18 +60,6 @@ const CourseCard = ({
 
   return (
     <MainContainer>
-      <ToastContainer
-        position="top-right"
-        autoClose={6000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        theme="dark"
-        pauseOnHover
-      />
       <div className="item-img">
         {/* <img
           src={`http://localhost:5000/${image.replace(/\\/g, "/")}`}
@@ -142,7 +111,7 @@ const CourseCard = ({
           See Details
         </button>
 
-        {isInstructor && location.pathname !== '/' && (
+        {isInstructor && location.pathname !== "/" && (
           <button onClick={deleteCourse} className="item-btn delete-btn">
             Delete
           </button>

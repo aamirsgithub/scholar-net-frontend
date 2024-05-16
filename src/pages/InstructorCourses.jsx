@@ -7,6 +7,8 @@ import isEqual from "lodash/isEqual";
 import { Typography } from "@mui/material";
 import { FlexDiv } from "../components/common/Style";
 import FooterCard from "../components/Footer/FooterCard";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const PageWrapper = styled.div`
   padding: 2rem;
@@ -68,13 +70,45 @@ const InstructorCourses = () => {
 
   if (!courses.length) return <div>No courses.</div>;
 
+  const deleteCourse = async (courseId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/delete-course/${courseId}/${userData._id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-  
+      if (!response.ok) {
+        throw new Error("Failed to delete course");
+      }
 
+      toast.success("Course Deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting course:", error);
+      toast.error("Error deleting course");
+    }
+  };
 
   return (
     <>
       <Navbar />
+      <ToastContainer
+        position="top-right"
+        autoClose={6000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        theme="dark"
+        pauseOnHover
+      />
       <PageWrapper>
         <FlexDiv>
           <Typography
@@ -84,7 +118,7 @@ const InstructorCourses = () => {
               fontSize: "3rem",
             }}
           >
-           {userData.displayName}'s Courses
+            {userData.displayName}'s Courses
           </Typography>
         </FlexDiv>
         <CoursesContainer>
@@ -94,12 +128,12 @@ const InstructorCourses = () => {
               {...course}
               CompleteCourse={courses}
               myCourse={true}
-              // onDelete={deleteCourse}
+              onDelete={() => deleteCourse(course._id)}
             />
           ))}
         </CoursesContainer>
       </PageWrapper>
-      <FooterCard/>
+      <FooterCard />
     </>
   );
 };
